@@ -6,17 +6,17 @@ module.exports = {
   ],
   theme: {
     colors: {
-      blue: {
-        100: '#B7D4FB',
-        200: '#9EC3F5',
-        300: '#84B1EF',
-        400: '#6BA0E9',
-        500: '#528FE2',
-        600: '#397EDC',
-        700: '#1F6CD6',
-        primary: '#065BD0'
+      'blue': {
+        '100': '#B7D4FB',
+        '200': '#9EC3F5',
+        '300': '#84B1EF',
+        '400': '#6BA0E9',
+        '500': '#528FE2',
+        '600': '#397EDC',
+        '700': '#1F6CD6',
+        'primary': '#065BD0'
       },
-      green: {
+      'green': {
         100: '#BBDFD5',
         200: '#AFD7CB',
         300: '#A2CFC2',
@@ -60,6 +60,7 @@ module.exports = {
       large: '0px 32px 60px rgba(112, 144, 176, 0.1)'
     },
     extend: {},
+    'blue': '#71AD9B'
   },
   plugins: [],
 }
