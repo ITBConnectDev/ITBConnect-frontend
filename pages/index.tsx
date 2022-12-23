@@ -8,16 +8,16 @@ import Jumbotron2 from "../assets/Jumbotron2.svg"
 import TempImage1 from "../assets/temp_pict_1.svg"
 import Logo from "../assets/Logo.svg"
 import Index1 from "../assets/Index1.svg"
-import {
-  useWindowSize,
-  useWindowWidth,
-  useWindowHeight,
-} from '@react-hook/window-size'
+import { useWindowSize } from '../utils/windowsize'
+import { useState, useEffect } from 'react';
 
 const Home: NextPage = () => {
-  const [width, height] = useWindowSize()
-  const onlyWidth = useWindowWidth()
-  const onlyHeight = useWindowHeight()
+  const [windowSize, setWindowSize] = useState(0);
+  const size = useWindowSize()
+
+  useEffect(() => {
+    setWindowSize(size.width);
+}, [size.width]);
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -36,7 +36,7 @@ const Home: NextPage = () => {
                 alt="Picture of the author"
                 className='ml-auto mr-0 h-full bg-no-repeat bg-contain h-auto w-[70%]'
               />      
-              <div className={`m-auto w-6/12 relative ${onlyWidth > 1200 ? "top-[-25vmin]" : "mt-[10vmin]"}`}>
+              <div className={`m-auto w-6/12 relative ${windowSize > 1200 ? "top-[-25vmin]" : "mt-[10vmin]"}`}>
                 <Image
                   src={Logo}
                   alt="Picture of the author"
@@ -53,24 +53,24 @@ const Home: NextPage = () => {
               <Image
                 src={Jumbotron2}
                 alt="Picture of the author"
-                className={`bg-no-repeat bg-contain h-auto w-[20%] relative ${onlyWidth > 1200 ? "top-[-35vmin]" : "mt-[10vmin]"}`}
+                className={`bg-no-repeat bg-contain h-auto w-[20%] relative ${windowSize > 1200 ? "top-[-35vmin]" : "mt-[10vmin]"}`}
               />
             </div> 
-          <div className={`min-h-max py-12 bg-green-primary w-full relative ${onlyWidth > 1200 ? "top-[-35vmin]" : ""}`}>
+          <div className={`min-h-max py-12 bg-green-primary w-full relative ${windowSize > 1200 ? "top-[-35vmin]" : ""}`}>
               <div className='text-5xl font-bold text-white text-center mb-16'>Feature Present</div>
               <div className='p-8 mx-24 bg-green-100 rounded-lg'>
                 <div className='grid grid-cols-4 gap-4'>
-                  <div className={`${onlyWidth > 1200 ? "col-span-1" : "col-span-4"}`}>
+                  <div className={`${windowSize > 1200 ? "col-span-1" : "col-span-4"}`}>
                   <Image
                     src={TempImage1}
                     alt="Picture of the author"
-                    className={`bg-no-repeat bg-contain h-auto ${onlyWidth > 1200 ? "w-[88%]" : "w-[50%]"} mx-auto relative`}
+                    className={`bg-no-repeat bg-contain h-auto ${windowSize > 1200 ? "w-[88%]" : "w-[50%]"} mx-auto relative`}
                   />
                   </div>
-                  <div className={`${onlyWidth > 1200 ? "col-span-3" : "col-span-4"}`}>
-                    <h1 className={`${onlyWidth > 1200 ? "" : "text-center"} text-blue-primary text-5xl font-bold mb-5`}>Competition Info</h1>
+                  <div className={`${windowSize > 1200 ? "col-span-3" : "col-span-4"}`}>
+                    <h1 className={`${windowSize > 1200 ? "" : "text-center"} text-blue-primary text-5xl font-bold mb-5`}>Competition Info</h1>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas mollis convallis risus, eu porta est sodales ac. In quis diam in sem auctor pharetra. Nunc scelerisque massa quam, eget sollicitudin quam venenatis quis. Etiam at ultricies mauris. Donec vel varius felis. Fusce id sollicitudin urna, in ullamcorper tortor. Nulla gravida orci vitae gravida aliquam. In semper ornare purus, sed viverra dui dictum eu. Sed gravida mi nibh, quis rhoncus enim varius id. Etiam vitae sollicitudin odio. Integer pulvinar nunc consectetur molestie vehicula. Cras dignissim ac erat non ultrices. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin mi ligula, pharetra non arcu ac, laoreet viverra turpis. Cras posuere tincidunt volutpat.</p>
-                    <div className={`${onlyWidth > 1200 ? "" : "mx-auto"} bg-blue-primary p-1 rounded-lg w-max text-center text-white mt-6 py-3 px-12`}>
+                    <div className={`${windowSize > 1200 ? "" : "mx-auto"} bg-blue-primary p-1 rounded-lg w-max text-center text-white mt-6 py-3 px-12`}>
                       LEARN MORE
                     </div>
                   </div>
@@ -78,37 +78,37 @@ const Home: NextPage = () => {
               </div>
               <div className='p-8 mx-24 bg-green-100 rounded-lg mt-6'>
                 <div className='grid grid-cols-4 gap-4'>
-                  <div className={`${onlyWidth > 1200 ? "col-span-1" : "col-span-4"}`}>
+                  <div className={`${windowSize > 1200 ? "col-span-1" : "col-span-4"}`}>
                   <Image
                     src={TempImage1}
                     alt="Picture of the author"
-                    className={`bg-no-repeat bg-contain h-auto ${onlyWidth > 1200 ? "w-[88%]" : "w-[50%]"} mx-auto relative`}
+                    className={`bg-no-repeat bg-contain h-auto ${windowSize > 1200 ? "w-[88%]" : "w-[50%]"} mx-auto relative`}
                   />
                   </div>
-                  <div className={`${onlyWidth > 1200 ? "col-span-3" : "col-span-4"}`}>
-                    <h1 className={`${onlyWidth > 1200 ? "" : "text-center"} text-blue-primary text-5xl font-bold mb-5`}>Cari Teman</h1>
+                  <div className={`${windowSize > 1200 ? "col-span-3" : "col-span-4"}`}>
+                    <h1 className={`${windowSize > 1200 ? "" : "text-center"} text-blue-primary text-5xl font-bold mb-5`}>Cari Teman</h1>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas mollis convallis risus, eu porta est sodales ac. In quis diam in sem auctor pharetra. Nunc scelerisque massa quam, eget sollicitudin quam venenatis quis. Etiam at ultricies mauris. Donec vel varius felis. Fusce id sollicitudin urna, in ullamcorper tortor. Nulla gravida orci vitae gravida aliquam. In semper ornare purus, sed viverra dui dictum eu. Sed gravida mi nibh, quis rhoncus enim varius id. Etiam vitae sollicitudin odio. Integer pulvinar nunc consectetur molestie vehicula. Cras dignissim ac erat non ultrices. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin mi ligula, pharetra non arcu ac, laoreet viverra turpis. Cras posuere tincidunt volutpat.</p>
-                    <div className={`${onlyWidth > 1200 ? "" : "mx-auto"} bg-blue-primary p-1 rounded-lg w-max text-center text-white mt-6 py-3 px-12`}>
+                    <div className={`${windowSize > 1200 ? "" : "mx-auto"} bg-blue-primary p-1 rounded-lg w-max text-center text-white mt-6 py-3 px-12`}>
                       LEARN MORE
                     </div>
                   </div>
                 </div>
               </div>
           </div>
-          <div className={`relative pb-16 ${onlyWidth > 1200 ? "top-[-35vmin]" : ""}`}>
+          <div className={`relative pb-16 ${windowSize > 1200 ? "top-[-35vmin]" : ""}`}>
             <div className={`flex justify-between`}>
               <Image
                 src={Index1}
                 alt="Picture of the author"
-                className={`bg-no-repeat bg-contain h-auto ${onlyWidth > 1200 ? "w-[10%]" : "hidden"} relative`}
+                className={`bg-no-repeat bg-contain h-auto ${windowSize > 1200 ? "w-[10%]" : "hidden"} relative`}
               />
-              <h1 className={`text-center text-5xl text-blue-primary font-bold mt-[3%] ${onlyWidth > 1200 ? "" : "mx-auto"}`}>
+              <h1 className={`text-center text-5xl text-blue-primary font-bold mt-[3%] ${windowSize > 1200 ? "" : "mx-auto"}`}>
                 How does it work?
               </h1>
               <Image
                 src={Index1}
                 alt="Picture of the author"
-                className={`bg-no-repeat bg-contain h-auto ${onlyWidth > 1200 ? "w-[10%]" : "hidden"} relative`}
+                className={`bg-no-repeat bg-contain h-auto ${windowSize > 1200 ? "w-[10%]" : "hidden"} relative`}
               />
             </div>
             <div className='bg-gray-200 text-5xl text-blue-primary font-bold mx-36 px-16 py-12 min-h-[500px] mt-12'>
