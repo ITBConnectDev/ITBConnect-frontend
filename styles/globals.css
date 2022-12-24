@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 @media only screen and (max-width: 1055px) {
-    .hide-items {
-        display: none;
-    }
+  .hide-items {
+    display: none;
+  }
 }
 
 @media only screen and (min-width: 1056px) {
-    .show-items {
-        display: none;
-    }
+  .show-items {
+    display: none;
+  }
 }
