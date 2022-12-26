@@ -21,7 +21,7 @@ const ListCompetition: NextPage = () => {
           className={`bg-no-repeat bg-contain h-auto "lg:w-[8%] w-[10%]" relative`}
         />
         <h1
-          className={`text-center text-8xl text-green-primary font-bold mt-[3%] lg:mx-0 mx-auto`}
+          className={`text-center text-8xl text-green-primary font-bold mt-[3%] lg:mx-0 mx-auto font-rubik`}
         >
           Competitions
         </h1>
@@ -82,7 +82,7 @@ const ListCompetition: NextPage = () => {
       <div className={`grid grid-cols-4 gap-2 mt-12 mb-9 lg:mx-36 mx-7`}>
         <div className={`lg:col-span-1 lg:mx-0 col-span-2 mx-auto`}>
           <EventCard
-            link="/"
+            link="/competitions/id"
             title="Event News"
             date="DD/MM/YYYY"
             views="9999"
@@ -91,7 +91,7 @@ const ListCompetition: NextPage = () => {
         </div>
         <div className={`lg:col-span-1 lg:mx-0 col-span-2 mx-auto`}>
           <EventCard
-            link="/"
+            link="/competitions/id"
             title="Event News"
             date="DD/MM/YYYY"
             views="9999"
@@ -100,7 +100,7 @@ const ListCompetition: NextPage = () => {
         </div>
         <div className={`lg:col-span-1 lg:mx-0 col-span-2 mx-auto`}>
           <EventCard
-            link="/"
+            link="/competitions/id"
             title="Event News"
             date="DD/MM/YYYY"
             views="9999"
@@ -109,7 +109,7 @@ const ListCompetition: NextPage = () => {
         </div>
         <div className={`lg:col-span-1 lg:mx-0 col-span-2 mx-auto`}>
           <EventCard
-            link="/"
+            link="/competitions/id"
             title="Event News"
             date="DD/MM/YYYY"
             views="9999"

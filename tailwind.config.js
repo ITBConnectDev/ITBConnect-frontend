@@ -59,7 +59,12 @@ module.exports = {
       medium: "0px 16px 40px rgba(112, 144, 176, 0.15)",
       large: "0px 32px 60px rgba(112, 144, 176, 0.1)",
     },
-    extend: {},
+    extend: {
+      fontFamily: {
+        rubik: ["var(--font-rubik)"],
+        lexend: ["var(--font-lexend)"],
+      },
+    },
     blue: "#71AD9B",
   },
   plugins: [],
