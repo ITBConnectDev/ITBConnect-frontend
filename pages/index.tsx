@@ -1,15 +1,16 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import Footer from "../components/footer";
-import Navbar from "../components/navbar";
+import Script from "next/script";
+import { useEffect, useState } from "react";
+import Index1 from "../assets/Index1.svg";
 import Jumbotron1 from "../assets/Jumbotron1.svg";
 import Jumbotron2 from "../assets/Jumbotron2.svg";
-import TempImage1 from "../assets/temp_pict_1.svg";
 import Logo from "../assets/Logo.svg";
-import Index1 from "../assets/Index1.svg";
+import TempImage1 from "../assets/temp_pict_1.svg";
+import Footer from "../components/footer";
+import Navbar from "../components/navbar";
 import { useWindowSize } from "../utils/windowsize";
-import { useState, useEffect } from "react";
 
 const Home: NextPage = () => {
   const [windowSize, setWindowSize] = useState(0);
@@ -28,8 +29,8 @@ const Home: NextPage = () => {
           rel="stylesheet"
           href="https://unpkg.com/flowbite@1.5.5/dist/flowbite.min.css"
         />
-        <script src="https://unpkg.com/flowbite@1.5.5/dist/flowbite.js"></script>
       </Head>
+      <Script src="https://unpkg.com/flowbite@1.5.5/dist/flowbite.js"></Script>
       <Navbar />
       <main className="flex w-full h-max">
         <div className="w-full h-40">

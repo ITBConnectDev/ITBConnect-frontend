@@ -1,8 +1,8 @@
 import type { NextPage } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import LoginImage from "../assets/LoginImage.png";
 import Logo from "../assets/Logo.png";
-import Link from "next/link";
 
 const Register: NextPage = () => {
   return (
@@ -36,7 +36,7 @@ const Register: NextPage = () => {
                   Email
                 </label>
                 <input
-                  className="appearance-none border border-2 rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="appearance-none border-2 rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   id="email"
                   type="email"
                   placeholder="Email"
@@ -48,7 +48,7 @@ const Register: NextPage = () => {
                     Nama Lengkap
                   </label>
                   <input
-                    className="appearance-none border border-2 rounded-lg w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline"
+                    className="appearance-none border-2 rounded-lg w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline"
                     id="nama_lengkap"
                     type="text"
                   />
@@ -58,7 +58,7 @@ const Register: NextPage = () => {
                     Nama Panggilan
                   </label>
                   <input
-                    className="appearance-none border border-2 rounded-lg w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline"
+                    className="appearance-none border-2 rounded-lg w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline"
                     id="nama_panggilan"
                     type="text"
                   />
@@ -70,7 +70,7 @@ const Register: NextPage = () => {
                     NIM
                   </label>
                   <input
-                    className="appearance-none border border-2 rounded-lg w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline"
+                    className="appearance-none border-2 rounded-lg w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline"
                     id="nim"
                     type="text"
                   />
@@ -80,7 +80,7 @@ const Register: NextPage = () => {
                     Jurusan
                   </label>
                   <input
-                    className="appearance-none border border-2 rounded-lg w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline"
+                    className="appearance-none border-2 rounded-lg w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline"
                     id="jurusan"
                     type="text"
                   />
@@ -92,7 +92,7 @@ const Register: NextPage = () => {
                     Password
                   </label>
                   <input
-                    className="appearance-none border border-2 rounded-lg w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline"
+                    className="appearance-none border-2 rounded-lg w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline"
                     id="password"
                     type="password"
                   />
@@ -102,7 +102,7 @@ const Register: NextPage = () => {
                     Confirm Password
                   </label>
                   <input
-                    className="appearance-none border border-2 rounded-lg w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline"
+                    className="appearance-none border-2 rounded-lg w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline"
                     id="confirm_password"
                     type="password"
                   />
