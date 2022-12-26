@@ -1,8 +1,8 @@
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import React from "react";
 import sample from "../assets/sample.svg";
 import viewsImage from "../assets/views.svg";
-import { useWindowSize } from "../utils/windowsize";
 
 interface EventCardProps {
   image: any;
@@ -19,16 +19,10 @@ const EventCard: React.FC<EventCardProps> = ({
   title,
   link,
 }) => {
+  const router = useRouter();
   const changePage = () => {
-    window.location.href = link;
+    router.push(link);
   };
-
-  const [windowSize, setWindowSize] = useState(0);
-  const size = useWindowSize();
-
-  useEffect(() => {
-    setWindowSize(size.width);
-  }, [size.width]);
 
   return (
     <div
@@ -41,11 +35,7 @@ const EventCard: React.FC<EventCardProps> = ({
         className={`bg-no-repeat bg-contain rounded-t-lg`}
       />
       <div className="p-6">
-        <div
-          className={`flex ${
-            windowSize > 1200 ? "justify-between" : "flex-col"
-          } mb-2.5`}
-        >
+        <div className={`flex lg:justify-between lg:flex-row flex-col mb-2.5`}>
           <p className="text-green-primary">{date}</p>
           <div className={`flex flex-row`}>
             <Image

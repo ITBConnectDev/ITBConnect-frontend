@@ -1,21 +1,15 @@
 import type { NextPage } from "next";
-import { useState, useEffect } from "react";
 import Image from "next/image";
-import Footer from "../components/footer";
-import Navbar from "../components/navbar";
 import Index1 from "../assets/Index1.svg";
 import Index2 from "../assets/Index2.png";
-import { useWindowSize } from "../utils/windowsize";
-import EventCard from "../components/eventCard";
 import ExploreCard from "../components/exploreCard";
+import Footer from "../components/footer";
+import Navbar from "../components/navbar";
+import { useWindowSize } from "../utils/windowsize";
 
 const Explore: NextPage = () => {
-  const [windowSize, setWindowSize] = useState(0);
   const size = useWindowSize();
-
-  useEffect(() => {
-    setWindowSize(size.width);
-  }, [size.width]);
+  const windowSize = size.width;
 
   return (
     <div className="flex min-h-screen flex-col">

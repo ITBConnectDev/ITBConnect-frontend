@@ -1,7 +1,8 @@
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import React from "react";
 import sampleOrang from "../assets/sampleOrang.svg";
-import { useWindowSize } from "../utils/windowsize";
 
 interface EventCardProps {
   image: any;
@@ -20,26 +21,20 @@ const ExploreCard: React.FC<EventCardProps> = ({
   nama_orang,
   link,
 }) => {
+  const router = useRouter();
   const changePage = () => {
-    window.location.href = link;
+    router.push(link);
   };
-
-  const [windowSize, setWindowSize] = useState(0);
-  const size = useWindowSize();
-
-  useEffect(() => {
-    setWindowSize(size.width);
-  }, [size.width]);
 
   return (
     <div className="max-w-sm bg-white border-2 border-gray-200 rounded-lg">
-      <a href={link}>
+      <Link href={link}>
         <Image
           src={sampleOrang}
           alt="Picture of the author"
           className={`bg-no-repeat bg-contain rounded-t-lg`}
         />
-      </a>
+      </Link>
       <div className="p-6">
         <h1 className="font-bold text-2xl">{nama_orang}</h1>
         <p className="text-base text-green-primary font-semibold">{role}</p>

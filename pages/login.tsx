@@ -1,8 +1,8 @@
 import type { NextPage } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import LoginImage from "../assets/LoginImage.png";
 import Logo from "../assets/Logo.png";
-import Link from "next/link";
 
 const Login: NextPage = () => {
   return (
@@ -24,7 +24,7 @@ const Login: NextPage = () => {
         <div className="px-20 pt-20 lg:pt-32">
           <h1 className="text-blue-primary font-bold text-4xl">Login</h1>
           <div className="flex pt-2">
-            <h5 className="text-blue-700 pr-1">Don't have account? </h5>
+            <h5 className="text-blue-700 pr-1">Don&apos;t have account? </h5>
             <Link href="/register">
               <h5 className="text-green-primary"> Sign up</h5>
             </Link>
