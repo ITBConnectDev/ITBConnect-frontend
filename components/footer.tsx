@@ -10,7 +10,7 @@ import Youtube from "../assets/Youtube.svg";
 class Footer extends Component {
   render() {
     return (
-      <div className="px-32 py-16 min-h-max h-60 w-full items-center border-t bg-blue-primary">
+      <div className="px-[5%] py-16 min-h-max h-60 w-full items-center border-t bg-blue-primary">
         <div className="flex justify-between mb-4">
           <div>
             <Image
