@@ -6,6 +6,8 @@ import sampleAboutUs1 from "../assets/sampleAboutUs1.svg";
 import Index3 from "../assets/Index3.svg";
 import Index4 from "../assets/Index4.svg";
 import Index1 from "../assets/Index1.svg";
+import AboutUs1 from "../assets/AboutUs1.svg"
+import Whatsapp from "../assets/Whatsapp.svg"
 import { useWindowSize } from "../utils/windowsize";
 import { useState, useEffect } from "react";
 
@@ -119,6 +121,46 @@ const AboutUs: NextPage = () => {
                 className={`bg-no-repeat bg-contain h-auto w-[100%] relative my-2`}
                 />
                 <p className="text-base text-secondary font-normal">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas mollis convallis risus, eu porta est sodales ac. In quis diam in sem auctor pharetra. Nunc scelerisque massa quam, eget sollicitudin quam venenatis quis. Etiam at ultricies mauris. Donec vel varius felis. Fusce id sollicitudin urna, in ullamcorper tortor. Nulla gravida orci vitae gravida aliquam. In semper ornare purus, sed viverra dui dictum eu. Sed gravida mi nibh, quis rhoncus enim varius id. Etiam vitae sollicitudin odio. Integer pulvinar nunc consectetur molestie vehicula. Cras dignissim ac erat non ultrices. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin mi ligula, pharetra non arcu ac, laoreet viverra turpis. Cras posuere tincidunt volutpat.</p>
+            </div>
+        </div>}
+        {windowSize > 1200 ? 
+        <div className="flex flex-row mx-32 my-12">
+            <div className="mr-32">
+                <h1 className="text-blue-primary text-3xl font-bold">About Us</h1>
+                <p className="mt-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas mollis convallis risus, eu porta est sodales ac. In quis diam in sem auctor pharetra. Nunc scelerisque massa quam, eget sollicitudin quam venenatis quis. Etiam at ultricies mauris. Donec vel varius felis. Fusce id sollicitudin urna, in ullamcorper tortor.</p>
+                <div className="flex flex-row bg-blue-primary p-2 text-center w-[30%] mt-4 items-center justify-center rounded">
+                    <Image
+                    src={Whatsapp}
+                    alt="Picture of the author"
+                    className={`bg-no-repeat bg-contain h-auto w-[10%] relative`}
+                    />
+                    <p className="text-white ml-2">081081081081</p>
+                </div>
+            </div>
+            <Image
+            src={AboutUs1}
+            alt="Picture of the author"
+            className={`bg-no-repeat bg-contain h-[18vmin] w-[auto] relative my-2`}
+            />
+        </div>
+         :
+        <div className="m-8">
+            <h1 className="text-blue-primary text-3xl font-bold">About Us</h1>
+            <p className="mt-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas mollis convallis risus, eu porta est sodales ac. In quis diam in sem auctor pharetra. Nunc scelerisque massa quam, eget sollicitudin quam venenatis quis. Etiam at ultricies mauris. Donec vel varius felis. Fusce id sollicitudin urna, in ullamcorper tortor.</p>
+            <div className="flex flex-row items-center justify-between mt-4">
+                <div className="flex flex-row bg-blue-primary p-2 text-center w-[30%] mt-4 items-center justify-center rounded">
+                    <Image
+                    src={Whatsapp}
+                    alt="Picture of the author"
+                    className={`bg-no-repeat bg-contain h-auto w-[10%] relative`}
+                    />
+                    <p className="text-white ml-2">081081081081</p>
+                </div>
+                <Image
+                src={AboutUs1}
+                alt="Picture of the author"
+                className={`bg-no-repeat bg-contain h-[14vmin] w-[auto] relative my-2`}
+                />
             </div>
         </div>}
       <Footer />
