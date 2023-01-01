@@ -1,10 +1,42 @@
+import { register as registerUser } from "@/api/AuthClient";
+import { validateEmail } from "@/utils/string";
 import type { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useForm } from "react-hook-form";
+import { useMutation, useQueryClient } from "react-query";
 import LoginImage from "../assets/LoginImage.png";
 import Logo from "../assets/Logo.png";
 
+type FormValues = {
+  email: string;
+  fullname: string;
+  nickname: string;
+  password: string;
+  confirmPassword: string;
+};
+
 const Register: NextPage = () => {
+  const {
+    register,
+    formState: { errors },
+    getValues,
+    handleSubmit,
+  } = useForm<FormValues>();
+  const queryClient = useQueryClient();
+  const router = useRouter();
+
+  const registerMutation = useMutation(registerUser, {
+    onSuccess(data, variables, context) {
+      queryClient.setQueryData("authUser", data);
+      router.push("/");
+    },
+  });
+
+  const onSubmit = handleSubmit((data) => {
+    registerMutation.mutate(data);
+  });
   return (
     <div className="flex h-screen flex-row">
       <Image
@@ -30,14 +62,18 @@ const Register: NextPage = () => {
             </Link>
           </div>
           <div className="">
-            <form className="pt-6">
+            <form className="pt-6" onSubmit={onSubmit}>
               <div className="mb-4">
                 <label className="block text-blue-primary text-sm font-bold mb-2">
                   Email
                 </label>
                 <input
                   className="appearance-none border-2 rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="email"
+                  {...register("email", {
+                    required: "Email wajib diisi.",
+                    validate: (value) =>
+                      validateEmail(value) || "Email tidak valid.",
+                  })}
                   type="email"
                   placeholder="Email"
                 />
@@ -49,8 +85,14 @@ const Register: NextPage = () => {
                   </label>
                   <input
                     className="appearance-none border-2 rounded-lg w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline"
-                    id="nama_lengkap"
                     type="text"
+                    {...register("fullname", {
+                      required: "Nama lengkap wajib diisi.",
+                      minLength: {
+                        value: 4,
+                        message: "Nama lengkap minimal 4 karakter.",
+                      },
+                    })}
                   />
                 </div>
                 <div className="w-full md:w-1/2 px-3">
@@ -59,8 +101,14 @@ const Register: NextPage = () => {
                   </label>
                   <input
                     className="appearance-none border-2 rounded-lg w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline"
-                    id="nama_panggilan"
                     type="text"
+                    {...register("nickname", {
+                      required: "Nama panggilan wajib diisi.",
+                      minLength: {
+                        value: 2,
+                        message: "Nama panggilan minimal 2 karakter.",
+                      },
+                    })}
                   />
                 </div>
               </div>
@@ -71,7 +119,6 @@ const Register: NextPage = () => {
                   </label>
                   <input
                     className="appearance-none border-2 rounded-lg w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline"
-                    id="nim"
                     type="text"
                   />
                 </div>
@@ -93,8 +140,14 @@ const Register: NextPage = () => {
                   </label>
                   <input
                     className="appearance-none border-2 rounded-lg w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline"
-                    id="password"
                     type="password"
+                    {...register("password", {
+                      required: "Password wajib diisi.",
+                      minLength: {
+                        value: 6,
+                        message: "Password minimal 6 karakter.",
+                      },
+                    })}
                   />
                 </div>
                 <div className="w-full md:w-1/2 px-3">
@@ -103,8 +156,12 @@ const Register: NextPage = () => {
                   </label>
                   <input
                     className="appearance-none border-2 rounded-lg w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline"
-                    id="confirm_password"
                     type="password"
+                    {...register("confirmPassword", {
+                      validate: (value) =>
+                        getValues("password") === value ||
+                        "Password tidak sama.",
+                    })}
                   />
                 </div>
               </div>
@@ -120,7 +177,7 @@ const Register: NextPage = () => {
                 </button>
                 <button
                   className="inline-block align-baseline bg-blue-primary hover:bg-blue-700 text-white py-2 px-8 rounded focus:outline-none focus:shadow-outline border-blue-primary border-2"
-                  type="button"
+                  type="submit"
                 >
                   Create Account
                 </button>

@@ -1,5 +1,6 @@
 import { Lexend, Rubik } from "@next/font/google";
 import type { AppProps } from "next/app";
+import { QueryClient, QueryClientProvider } from "react-query";
 import "../styles/globals.css";
 
 const rubik = Rubik({
@@ -14,10 +15,14 @@ const lexend = Lexend({
   variable: "--font-lexend",
 });
 
+const queryClient = new QueryClient();
+
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <main className={`${rubik.variable} ${lexend.variable} font-lexend`}>
-      <Component {...pageProps} />
+      <QueryClientProvider client={queryClient}>
+        <Component {...pageProps} />
+      </QueryClientProvider>
     </main>
   );
 }
