@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import LoginImage from "../assets/LoginImage.png";
 import Logo from "../assets/Logo.png";
+import {useEffect} from 'react'
 
 type FormValues = {
   email: string;
@@ -27,10 +28,20 @@ const Login: NextPage = () => {
       queryClient.setQueryData("authUser", data);
       router.push("/");
     },
+    onError(err, variables, context) {
+      alert("Terjadi kesalahan sistem, harap coba lagi")
+    }
   });
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = (data: any) => {
     loginMutation.mutate(data);
-  });
+  };
+
+  const onError = () => {
+    if(errors) {
+      alert(Object.values(errors)[0]?.message)
+    }
+  }
+
   return (
     <div className="flex h-screen flex-row">
       <Image
@@ -56,7 +67,7 @@ const Login: NextPage = () => {
             </Link>
           </div>
           <div className="">
-            <form className="pt-6" onSubmit={onSubmit}>
+            <form className="pt-6" onSubmit={handleSubmit(onSubmit, onError)}>
               <div className="mb-4">
                 <label className="block text-blue-primary text-sm font-bold mb-2">
                   Email

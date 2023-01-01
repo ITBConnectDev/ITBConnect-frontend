@@ -36,11 +36,22 @@ const Register: NextPage = () => {
       queryClient.setQueryData("authUser", data);
       router.push("/");
     },
+    onError(err, variables, context) {
+      alert("Terjadi kesalahan sistem, harap coba lagi")
+    }
   });
 
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = (data: any) => {
     registerMutation.mutate(data);
-  });
+  };
+
+  const onError = () => {
+    if(Object.values(errors)[0] === undefined) {
+      alert("Data wajib diisi")
+    } else {
+      alert(Object.values(errors)[0]?.message)
+    }
+  }
 
   const jurusan = majors[watch("NIM")?.slice(0, 3)];
   return (
@@ -68,7 +79,7 @@ const Register: NextPage = () => {
             </Link>
           </div>
           <div className="">
-            <form className="pt-6" onSubmit={onSubmit}>
+            <form className="pt-6" onSubmit={handleSubmit(onSubmit, onError)}>
               <div className="mb-4">
                 <label className="block text-blue-primary text-sm font-bold mb-2">
                   Email
