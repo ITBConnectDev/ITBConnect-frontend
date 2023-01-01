@@ -7,6 +7,7 @@ export async function register(data: {
   confirmPassword: string;
   nickname: string;
   fullname: string;
+  NIM: string;
 }) {
   return await request("/auth/register", "POST", data);
 }
@@ -21,4 +22,8 @@ export async function logout() {
 
 export async function getAuthUser() {
   return await request<IAuthUser | undefined>("/auth");
+}
+
+export async function getMajors() {
+  return await fetch("/majors.json").then((res) => res.json());
 }

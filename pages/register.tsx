@@ -1,4 +1,5 @@
 import { register as registerUser } from "@/api/AuthClient";
+import useMajors from "@/hooks/useMajors";
 import { validateEmail } from "@/utils/string";
 import type { NextPage } from "next";
 import Image from "next/image";
@@ -15,6 +16,7 @@ type FormValues = {
   nickname: string;
   password: string;
   confirmPassword: string;
+  NIM: string;
 };
 
 const Register: NextPage = () => {
@@ -23,9 +25,11 @@ const Register: NextPage = () => {
     formState: { errors },
     getValues,
     handleSubmit,
+    watch,
   } = useForm<FormValues>();
   const queryClient = useQueryClient();
   const router = useRouter();
+  const majors = useMajors();
 
   const registerMutation = useMutation(registerUser, {
     onSuccess(data, variables, context) {
@@ -37,6 +41,8 @@ const Register: NextPage = () => {
   const onSubmit = handleSubmit((data) => {
     registerMutation.mutate(data);
   });
+
+  const jurusan = majors[watch("NIM")?.slice(0, 3)];
   return (
     <div className="flex h-screen flex-row">
       <Image
@@ -120,6 +126,13 @@ const Register: NextPage = () => {
                   <input
                     className="appearance-none border-2 rounded-lg w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline"
                     type="text"
+                    {...register("NIM", {
+                      required: "NIM wajib diisi.",
+                      validate: (value) =>
+                        (value.length === 8 &&
+                          Object.keys(majors).includes(value.slice(0, 3))) ||
+                        "NIM tidak valid.",
+                    })}
                   />
                 </div>
                 <div className="w-full md:w-1/2 px-3">
@@ -128,8 +141,9 @@ const Register: NextPage = () => {
                   </label>
                   <input
                     className="appearance-none border-2 rounded-lg w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline"
-                    id="jurusan"
                     type="text"
+                    readOnly
+                    value={jurusan || ""}
                   />
                 </div>
               </div>
