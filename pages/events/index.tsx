@@ -1,5 +1,6 @@
 import Index1 from "@/assets/Index1.svg";
 import Index2 from "@/assets/Index2.png";
+import Carousel1 from "@/assets/Carousel1.svg";
 import EventCard from "@/components/eventCard";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
@@ -7,22 +8,39 @@ import { useWindowSize } from "@/utils/windowsize";
 import type { NextPage } from "next";
 import Image from "next/image";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from 'react-responsive-carousel';
 
 const ListNews: NextPage = () => {
   const size = useWindowSize();
-  const windowSize = size.width;
+  const windowSize = size.width; 
 
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />
+      <Carousel showArrows={true} showIndicators={true} className="m-0">
+        <div>
+            <Image
+              src={Carousel1}
+              alt="Picture of the author"
+              className={`bg-no-repeat bg-contain h-auto lg:w-[10%] w-[8%] relative`}
+            />
+        </div>
+        <div>
+            <Image
+              src={Carousel1}
+              alt="Picture of the author"
+              className={`bg-no-repeat bg-contain h-auto lg:w-[10%] w-[8%] relative`}
+            />
+        </div>
+      </Carousel>
       <div className={`flex justify-between`}>
         <Image
           src={windowSize > 1200 ? Index1 : Index2}
           alt="Picture of the author"
-          className={`bg-no-repeat bg-contain h-auto lg:w-[8%] w-[10%] relative`}
+          className={`bg-no-repeat bg-contain h-auto lg:w-[10%] w-[8%] relative`}
         />
         <h1
-          className={`text-center text-8xl text-green-primary font-bold mt-[3%] lg:mx-0 mx-auto`}
+          className={`text-center lg:text-8xl text-6xl text-green-primary font-bold mt-[3%] lg:mx-0 mx-auto`}
         >
           Event News
         </h1>
