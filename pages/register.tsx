@@ -1,4 +1,5 @@
 import { register as registerUser } from "@/api/AuthClient";
+import { APIError } from "@/api/request";
 import useMajors from "@/hooks/useMajors";
 import { validateEmail } from "@/utils/string";
 import type { NextPage } from "next";
@@ -36,9 +37,13 @@ const Register: NextPage = () => {
       queryClient.setQueryData("authUser", data);
       router.push("/");
     },
-    onError(err, variables, context) {
-      alert("Terjadi kesalahan sistem, harap coba lagi")
-    }
+    onError(err: APIError<any>, variables, context) {
+      if (err.status === 400) {
+        alert(err.data.error);
+      } else {
+        alert("Terjadi kesalahan sistem, harap coba lagi");
+      }
+    },
   });
 
   const onSubmit = (data: any) => {
@@ -46,12 +51,12 @@ const Register: NextPage = () => {
   };
 
   const onError = () => {
-    if(Object.values(errors)[0] === undefined) {
-      alert("Data wajib diisi")
+    if (Object.values(errors)[0] === undefined) {
+      alert("Data wajib diisi");
     } else {
-      alert(Object.values(errors)[0]?.message)
+      alert(Object.values(errors)[0]?.message);
     }
-  }
+  };
 
   const jurusan = majors[watch("NIM")?.slice(0, 3)];
   return (
