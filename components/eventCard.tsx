@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import sample from "../assets/sample.svg";
@@ -19,15 +20,11 @@ const EventCard: React.FC<EventCardProps> = ({
   title,
   link,
 }) => {
-  const router = useRouter();
-  const changePage = () => {
-    router.push(link);
-  };
 
   return (
-    <div
+    <Link
       className="max-w-sm bg-white border-2 border-gray-200 rounded-lg"
-      onClick={changePage}
+      href={link}
     >
       <Image
         src={sample}
@@ -50,7 +47,7 @@ const EventCard: React.FC<EventCardProps> = ({
           <h1>{title}</h1>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
