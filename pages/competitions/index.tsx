@@ -1,3 +1,4 @@
+import request from "@/api/request";
 import Index1 from "@/assets/Index1.svg";
 import Index2 from "@/assets/Index2.png";
 import EventCard from "@/components/eventCard";
@@ -6,8 +7,8 @@ import Navbar from "@/components/navbar";
 import { useWindowSize } from "@/utils/windowsize";
 import type { NextPage } from "next";
 import Image from "next/image";
-import {useQuery} from 'react-query';
-import {useState} from "react";
+import { useState } from "react";
+import { useQuery } from 'react-query';
 
 const ListCompetition: NextPage = () => {
   const size = useWindowSize();
@@ -16,18 +17,20 @@ const ListCompetition: NextPage = () => {
   const [page, setPage] = useState(1);
 
   const getDataNews = async (hal) => {
-    console.log(hal)
-		const res = await fetch(process.env.NEXT_PUBLIC_API_ENDPOINT + "/competition/?page=" + hal);
-		return res.json();
+		const data = await request("/competition/?page=" + hal);
+    return data
 	};
 	// Using the hook
 	const {data, error, isLoading} = useQuery({
-    queryKey: ['projects', page],
+    queryKey: ['competitions', page],
     queryFn: () => getDataNews(page),
     keepPreviousData : true
   })
 
-  console.log(data)
+  if (data) {
+    console.log(data)
+  }
+
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -98,11 +101,11 @@ const ListCompetition: NextPage = () => {
       </form>
 
       <div className={`grid grid-cols-4 gap-2 mt-12 mb-9 lg:mx-36 mx-7`}>
-        {data && data.data.competitions.map((d, i) => {
+        {data && data.competitions.map((d, i) => {
           return(
             <div key={i} className={`lg:col-span-1 lg:mx-0 col-span-2 mx-auto`}>
             <EventCard
-            link={d.url}
+            link={"/competitions/"  + d.id }
             title={d.name}
             date={d.date.slice(0,10)}
             views="9999"
@@ -116,19 +119,19 @@ const ListCompetition: NextPage = () => {
       <nav aria-label="Page navigation example" className="m-auto mb-8">
         <ul className="inline-flex items-center -space-x-px">
             <li onClick={() => setPage(Math.max(page - 1,0))}>
-                <a href="#" className="block px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                <a className="block px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                   <span className="sr-only">Previous</span>
                   <svg aria-hidden="true" className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
                 </a>
               </li>
-          {data && Array.from(Array(data.data.pageTotal), (e, i) => {
+          {data && Array.from(Array(data.pageTotal), (e, i) => {
             return(
               <li key={i}>
-              <a href="#" className="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{i + 1}</a>
+              <a className="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{i + 1}</a>
             </li>
             )
           })}
-          <li onClick={() => setPage(Math.min(page + 1,data.data.pageTotal))}>
+          <li onClick={() => setPage(Math.min(page + 1,data.pageTotal))}>
             <a className="block px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
               <span className="sr-only">Next</span>
               <svg aria-hidden="true" className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
