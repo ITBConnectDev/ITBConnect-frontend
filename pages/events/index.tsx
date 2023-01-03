@@ -28,7 +28,6 @@ const ListNews: NextPage = () => {
     queryFn: () => getDataNews(page),
     keepPreviousData : true
   })
-  console.log(data)
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -140,7 +139,7 @@ const ListNews: NextPage = () => {
               </li>
           {data && Array.from(Array(data.data.pageTotal), (e, i) => {
             return(
-              <li>
+              <li key={i}>
               <a href="#" className="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{i + 1}</a>
             </li>
             )
