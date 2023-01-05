@@ -1,26 +1,24 @@
 /* eslint-disable @next/next/no-img-element */
 import request from "@/api/request";
-import Index3 from "@/assets/Index3.svg";
 import Index5 from "@/assets/Index5.svg";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
-import { ICompetition } from "@/types/competition";
+import { IEvent } from "@/types/event";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useQuery } from "react-query";
 
 async function getDetail(id: string) {
-  return await request<ICompetition>("/competition/" + id);
+  return await await request<IEvent>("/news/" + id);
 }
 
-function CompetitionPage() {
+function EventPage() {
   const { query } = useRouter();
-  const compId = query.compId as string;
-  const { data } = useQuery(["competition", compId], () => getDetail(compId), {
-    enabled: !!compId,
+  const eventId = query.eventId as string;
+  const { data } = useQuery(["event", eventId], () => getDetail(eventId), {
+    enabled: !!eventId,
     staleTime: Infinity,
   });
-
   let urlStr = "";
   if (data?.url) {
     try {
@@ -38,10 +36,9 @@ function CompetitionPage() {
             <div className="hidden lg:flex flex-col justify-end">
               <Image src={Index5} alt="decor" />
             </div>
-
-            <div className="w-full max-w-screen-lg mx-auto">
+            <div className="w-full">
               <h1
-                className={`text-center text-2xl md:text-8xl text-green-primary font-bold mt-[3%] lg:mx-0 mx-auto font-rubik`}
+                className={`md:hidden text-center text-2xl md:text-8xl text-green-primary font-bold mt-[3%] lg:mx-0 mx-auto font-rubik`}
               >
                 {data.name}
               </h1>
@@ -50,36 +47,14 @@ function CompetitionPage() {
                 alt="banner"
                 className="w-full md:hidden px-4"
               />
-              <ul className="flex gap-3 flex-wrap justify-center md:hidden mt-6">
-                {data.competitionTags.map((tag) => (
-                  <Tag key={tag.id} tag={tag.tag} />
-                ))}
-              </ul>
-              <div className="flex justify-center mt-3">
-                <button
-                  className="bg-blue-primary text-white text-xs sm:text-sm w-48 py-4 sm:py-5 rounded-md mt-8 md:mt-0"
-                  onClick={() =>
-                    navigator.share({
-                      url: window.location.href,
-                      title: data.name,
-                    })
-                  }
-                >
-                  SHARE
-                </button>
-              </div>
+              <div className="flex justify-center mt-3"></div>
               <div className="flex flex-col-reverse md:flex-row my-12 gap-6 px-4">
                 <div className="flex flex-col gap-6 w-full md:w-[380px]">
-                  <ul className="hidden md:flex gap-3 flex-wrap">
-                    {data.competitionTags.map((tag) => (
-                      <Tag key={tag.id} tag={tag.tag} />
-                    ))}
-                  </ul>
                   <div className="px-5 pt-3 pb-6 md:p-12 border border-gray-400 rounded-3xl">
                     <h3 className="font-bold text-green-primary text-xl md:text-2xl">
                       Penyelenggara
                     </h3>
-                    <div className="mt-5">
+                    <div className="mt-2 md:mt-5">
                       <h4 className="font-semibold md:text-base text-xs">
                         {data.organizer}
                       </h4>
@@ -92,7 +67,7 @@ function CompetitionPage() {
                     <h3 className="font-bold text-green-primary text-xl md:text-2xl">
                       Tanggal Pelaksanaan
                     </h3>
-                    <div className="mt-5">
+                    <div className="mt-2 md:mt-5">
                       <h4 className="font-semibold text-xs md:text-base">
                         {new Date(data.date).toLocaleDateString("id", {
                           day: "numeric",
@@ -110,7 +85,7 @@ function CompetitionPage() {
                       <h3 className="font-bold text-green-primary text-xl md:text-2xl">
                         Sosial Media
                       </h3>
-                      <ul className="mt-5 flex flex-col gap-6 text-xs md:text-base">
+                      <ul className="mt-2 md:mt-5 flex flex-col gap-6 text-xs md:text-base">
                         {/* instagram */}
                         {data.instagramURL ? (
                           <li className="font-semibold">
@@ -186,36 +161,68 @@ function CompetitionPage() {
                       </ul>
                     </div>
                   )}
-                  {/* <div className="flex justify-between text-sm">
-                    <Link
-                      href="/"
-                      className="bg-blue-primary text-white rounded-full px-10 py-3"
+                  <div className="hidden md:block p-12 border border-gray-400 rounded-3xl">
+                    <h3 className="font-bold text-green-primary text-2xl">
+                      Registrasi
+                    </h3>
+                    <p className="mt-2 md:mt-5 text-xs md:text-base">
+                      Daftarkan dirimu sekarang ke acara yang sedang berlangsung
+                      untuk mendapatkan keuntungan menarik di dalamnya!
+                    </p>
+                    <a
+                      href={data.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="block text-center bg-blue-primary text-white text-xs sm:text-sm w-48 max-w-full mx-auto py-4 sm:py-5 rounded-md mt-4"
                     >
-                      CARI TEMAN
-                    </Link>
-                    <Link
-                      href="/"
-                      className="bg-blue-primary text-white rounded-full px-10 py-3"
-                    >
-                      CARI MENTOR
-                    </Link>
-                  </div> */}
+                      REGISTER
+                    </a>
+                  </div>
                 </div>
-                <div className="flex-1 px-5 py-3 md:p-12 border border-gray-400 rounded-3xl">
-                  <h3 className="font-bold text-green-primary text-xl md:text-2xl">
-                    Detail Acara
+                <div className="md:flex-1 flex flex-col">
+                  <img
+                    src={data.photoURLs[0]?.url}
+                    alt={data.name}
+                    className="aspect-video object-cover hidden md:block"
+                  />
+                  <h1
+                    className={`text-center text-2xl md:text-8xl text-green-primary font-bold mt-[3%] lg:mx-0 mx-auto font-rubik`}
+                  >
+                    {data.name}
+                  </h1>
+                  <div className="flex-1 px-5 py-3 md:p-12 border border-gray-400 rounded-3xl">
+                    <h3 className="font-bold text-green-primary text-xl md:text-2xl">
+                      Detail Acara
+                    </h3>
+                    <p
+                      className="mt-2 md:mt-5 text-xs md:text-base"
+                      dangerouslySetInnerHTML={{
+                        __html: data.description.replace(/\n/g, `<br />`),
+                      }}
+                    ></p>
+                  </div>
+                </div>
+                <div className="md:hidden px-5 py-3 border border-gray-400 rounded-3xl">
+                  <h3 className="font-bold text-green-primary text-xl">
+                    Registrasi
                   </h3>
-                  <p
-                    className="mt-5 text-xs md:text-base"
-                    dangerouslySetInnerHTML={{
-                      __html: data.description.replace(/\n/g, `<br />`),
-                    }}
-                  ></p>
+                  <p className="mt-2 md:mt-5 text-xs md:text-base">
+                    Daftarkan dirimu sekarang ke acara yang sedang berlangsung
+                    untuk mendapatkan keuntungan menarik di dalamnya!
+                  </p>
+                  <a
+                    href={data.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="block text-center bg-blue-primary text-white text-xs sm:text-sm w-48 max-w-full mx-auto py-4 sm:py-5 rounded-md mt-4"
+                  >
+                    REGISTER
+                  </a>
                 </div>
               </div>
             </div>
             <div className="hidden lg:block">
-              <Image src={Index3} alt="decor" />
+              <div style={{ width: "124px", height: "496px" }} />
             </div>
           </div>
         )}
@@ -233,4 +240,4 @@ function Tag({ tag }: { tag: string }) {
   );
 }
 
-export default CompetitionPage;
+export default EventPage;
