@@ -13,7 +13,7 @@ export default async function request<T = any>(
   }).then(async (res) => {
     const data = await res.json();
     if (res.ok) return data?.data;
-    throw new APIError(res.status, data);
+    throw new APIError(res.status, data?.error);
   });
 }
 
