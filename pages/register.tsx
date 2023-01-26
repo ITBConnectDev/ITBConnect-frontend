@@ -1,4 +1,5 @@
 import { register as registerUser } from "@/api/AuthClient";
+import { APIError } from "@/api/request";
 import useMajors from "@/hooks/useMajors";
 import { validateEmail } from "@/utils/string";
 import type { NextPage } from "next";
@@ -16,7 +17,6 @@ type FormValues = {
   nickname: string;
   password: string;
   confirmPassword: string;
-  NIM: string;
 };
 
 const Register: NextPage = () => {
@@ -26,7 +26,7 @@ const Register: NextPage = () => {
     getValues,
     handleSubmit,
     watch,
-  } = useForm<FormValues>();
+  } = useForm<FormValues>({ mode: "onChange" });
   const queryClient = useQueryClient();
   const router = useRouter();
   const majors = useMajors();
@@ -36,24 +36,29 @@ const Register: NextPage = () => {
       queryClient.setQueryData("authUser", data);
       router.push("/");
     },
-    onError(err, variables, context) {
-      alert("Terjadi kesalahan sistem, harap coba lagi")
-    }
+    onError(err: APIError<any>, variables, context) {
+      if (err.status === 400) {
+        alert(err.data.error);
+      } else {
+        alert("Terjadi kesalahan sistem, harap coba lagi");
+      }
+    },
   });
 
   const onSubmit = (data: any) => {
-    registerMutation.mutate(data);
+    registerMutation.mutate({ ...data, NIM });
   };
-
   const onError = () => {
-    if(Object.values(errors)[0] === undefined) {
-      alert("Data wajib diisi")
+    if (Object.values(errors)[0] === undefined) {
+      alert("Data wajib diisi");
     } else {
-      alert(Object.values(errors)[0]?.message)
+      alert(Object.values(errors)[0]?.message);
     }
-  }
+  };
+  let NIM = watch("email")?.slice(0, 8) || "";
+  if (errors.email) NIM = "";
 
-  const jurusan = majors[watch("NIM")?.slice(0, 3)];
+  const jurusan = majors[NIM.slice(0, 3)];
   return (
     <div className="flex h-screen flex-row">
       <Image
@@ -89,7 +94,8 @@ const Register: NextPage = () => {
                   {...register("email", {
                     required: "Email wajib diisi.",
                     validate: (value) =>
-                      validateEmail(value) || "Email tidak valid.",
+                      validateEmail(value) ||
+                      "Format email <nim>@mahasiswa.itb.ac.id.",
                   })}
                   type="email"
                   placeholder="Email"
@@ -137,13 +143,8 @@ const Register: NextPage = () => {
                   <input
                     className="appearance-none border-2 rounded-lg w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline"
                     type="text"
-                    {...register("NIM", {
-                      required: "NIM wajib diisi.",
-                      validate: (value) =>
-                        (value.length === 8 &&
-                          Object.keys(majors).includes(value.slice(0, 3))) ||
-                        "NIM tidak valid.",
-                    })}
+                    readOnly
+                    value={NIM}
                   />
                 </div>
                 <div className="w-full md:w-1/2 px-3">

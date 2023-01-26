@@ -1,4 +1,5 @@
 import { login } from "@/api/AuthClient";
+import { APIError } from "@/api/request";
 import { validateEmail } from "@/utils/string";
 import type { NextPage } from "next";
 import Image from "next/image";
@@ -8,7 +9,6 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import LoginImage from "../assets/LoginImage.png";
 import Logo from "../assets/Logo.png";
-import {useEffect} from 'react'
 
 type FormValues = {
   email: string;
@@ -29,8 +29,16 @@ const Login: NextPage = () => {
       router.push("/");
     },
     onError(err, variables, context) {
-      alert("Terjadi kesalahan sistem, harap coba lagi")
-    }
+      if (
+        err instanceof APIError &&
+        typeof err.data === "string" &&
+        err.status < 500
+      ) {
+        alert(err.data);
+      } else {
+        alert("Terjadi kesalahan sistem, harap coba lagi");
+      }
+    },
   });
   const onSubmit = (data: any) => {
     loginMutation.mutate(data);
@@ -38,9 +46,14 @@ const Login: NextPage = () => {
 
   const onError = () => {
     if(errors) {
-      alert(Object.values(errors)[0]?.message)
+      if(Object.values(errors)[0] === undefined) {
+        alert("Data wajib diisi")
+      } else {
+        alert(Object.values(errors)[0]?.message)
+      }
     }
   }
+
 
   return (
     <div className="flex h-screen flex-row">
