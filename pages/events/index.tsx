@@ -1,17 +1,17 @@
+import request from "@/api/request";
+import Carousel1 from "@/assets/Carousel1.svg";
 import Index1 from "@/assets/Index1.svg";
 import Index2 from "@/assets/Index2.png";
-import Carousel1 from "@/assets/Carousel1.svg";
 import EventCard from "@/components/eventCard";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import { useWindowSize } from "@/utils/windowsize";
 import type { NextPage } from "next";
 import Image from "next/image";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { useState } from "react";
+import { useQuery } from 'react-query';
 import { Carousel } from 'react-responsive-carousel';
-import {useQuery} from 'react-query';
-import {useState} from "react";
-import request from "@/api/request";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 
 const ListNews: NextPage = () => {
   const size = useWindowSize();
@@ -118,7 +118,7 @@ const ListNews: NextPage = () => {
             return(
               <div key={i} className={`lg:col-span-1 lg:mx-0 col-span-2 mx-auto`}>
               <EventCard
-              link={d.url}
+              link={"/events/" + d.id}
               title={d.name}
               date={d.date.slice(0,10)}
               views="9999"
