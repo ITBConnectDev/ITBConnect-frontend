@@ -1,13 +1,15 @@
 export default async function request<T = any>(
   url: string,
   method?: string,
-  body?: any
+  body?: any,
+  headers?: any
 ): Promise<T> {
   return await fetch(process.env.NEXT_PUBLIC_API_ENDPOINT + url, {
     method,
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
+      ...headers,
     },
     body: JSON.stringify(body),
   }).then(async (res) => {
