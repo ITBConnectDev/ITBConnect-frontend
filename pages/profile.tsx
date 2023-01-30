@@ -227,53 +227,8 @@ const Profile: NextPage<{ user: IProfileUser }> = ({ user }) => {
               windowSize <= 1200 ? "mx-auto w-[80%]" : "ml-11 w-[40%]"
             }`}
           >
-            <div className="bg-white rounded-lg drop-shadow-2xl p-8 w-[100%] border-2 mb-5">
-              <div className="flex flex-row justify-between mb-5">
-                <h1 className="text-green-primary text-3xl">
-                  Skills / Interest
-                </h1>
-                <div className="flex flex-row mr-4">
-                  <Image
-                    src={AddIcon}
-                    alt="Picture of the author"
-                    className="bg-no-repeat bg-contain bg-left h-100 w-[60%]"
-                  />
-                  <Image
-                    src={EditTextIcon}
-                    alt="Picture of the author"
-                    className="bg-no-repeat bg-contain bg-left h-100 w-[60%] ml-4"
-                  />
-                </div>
-              </div>
-              {/* TODO: Integrate skills with Backend */}
-              <div className="flex flex-row flex-wrap">
-                <h1 className="w-[50%] mb-2">Data scientist</h1>
-                <h1 className="w-[50%]">UI UX</h1>
-                <h1 className="w-[50%]">Web</h1>
-              </div>
-            </div>
-            <div className="bg-white rounded-lg drop-shadow-2xl p-8 w-[100%] border-2 mb-5">
-              <div className="flex flex-row justify-between mb-5">
-                <h1 className="text-green-primary text-3xl">Fluent In</h1>
-                <div className="flex flex-row mr-4">
-                  <Image
-                    src={AddIcon}
-                    alt="Picture of the author"
-                    className="bg-no-repeat bg-contain bg-left h-100 w-[60%]"
-                  />
-                  <Image
-                    src={EditTextIcon}
-                    alt="Picture of the author"
-                    className="bg-no-repeat bg-contain bg-left h-100 w-[60%] ml-4"
-                  />
-                </div>
-              </div>
-              {/* TODO: Integrate language with Backend */}
-              <div className="flex flex-row flex-wrap">
-                <h1 className="w-[100%] mb-2">Bahasa Indonesia</h1>
-                <h1 className="w-[100%]">English</h1>
-              </div>
-            </div>
+            <Interests interests={user.userInterests} />
+            <Languages languages={user.userLanguages} />
           </div>
         </div>
       </div>
@@ -326,7 +281,7 @@ function Achievements() {
               <path
                 fill-rule="evenodd"
                 d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                clip-rule="evenodd"
+                clipRule="evenodd"
               ></path>
             </svg>
           </li>
@@ -361,7 +316,7 @@ function Achievements() {
               <path
                 fill-rule="evenodd"
                 d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                clip-rule="evenodd"
+                clipRule="evenodd"
               ></path>
             </svg>
           </li>
@@ -392,6 +347,73 @@ function Achievement({ achievement }: { achievement: IAchievement }) {
       <p className="text-gray-600 mb-2">{achievement.description}</p>
       <hr />
     </li>
+  );
+}
+
+function Interests({
+  interests,
+}: {
+  interests: IProfileUser["userInterests"];
+}) {
+  return (
+    <div className="bg-white rounded-lg drop-shadow-2xl p-8 w-[100%] border-2 mb-5">
+      <div className="flex flex-row justify-between mb-5">
+        <h2 className="text-green-primary text-3xl">Skills / Interest</h2>
+        <div className="flex flex-row mr-4">
+          <Image
+            src={AddIcon}
+            alt="Picture of the author"
+            className="bg-no-repeat bg-contain bg-left h-100 w-[60%]"
+          />
+          <Image
+            src={EditTextIcon}
+            alt="Picture of the author"
+            className="bg-no-repeat bg-contain bg-left h-100 w-[60%] ml-4"
+          />
+        </div>
+      </div>
+      <ul className="flex flex-row flex-wrap">
+        {interests.map((interest) => (
+          <li className="w-1/2 first:mb-2" key={interest.id}>
+            {interest.interest}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function Languages({
+  languages,
+}: {
+  languages: IProfileUser["userLanguages"];
+}) {
+  return (
+    <div className="bg-white rounded-lg drop-shadow-2xl p-8 w-[100%] border-2 mb-5">
+      <div className="flex flex-row justify-between mb-5">
+        <h1 className="text-green-primary text-3xl">Fluent In</h1>
+        <div className="flex flex-row mr-4">
+          <Image
+            src={AddIcon}
+            alt="Picture of the author"
+            className="bg-no-repeat bg-contain bg-left h-100 w-[60%]"
+          />
+          <Image
+            src={EditTextIcon}
+            alt="Picture of the author"
+            className="bg-no-repeat bg-contain bg-left h-100 w-[60%] ml-4"
+          />
+        </div>
+      </div>
+
+      <ul className="flex flex-row flex-wrap">
+        {languages.map((language) => (
+          <li key={language.id} className="w-full first:mb-2">
+            {language.language}
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 

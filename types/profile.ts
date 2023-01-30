@@ -14,6 +14,14 @@ export interface IProfileUser {
     linkedinURL: string;
     phoneNumber: string;
   } | null;
+  userInterests: Array<{
+    id: number;
+    interest: string;
+  }>;
+  userLanguages: Array<{
+    id: number;
+    language: string;
+  }>;
 }
 
 export interface IAchievement {
