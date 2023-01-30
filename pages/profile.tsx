@@ -1,4 +1,9 @@
-import { getUserProfile, updateUserProfile } from "@/api/ProfileClient";
+/* eslint-disable @next/next/no-img-element */
+import {
+  getUserProfile,
+  updateUserProfile,
+  uploadPhoto,
+} from "@/api/ProfileClient";
 import Achievements from "@/components/profile/achievement";
 import Interests from "@/components/profile/interests";
 import Languages from "@/components/profile/languages";
@@ -6,6 +11,7 @@ import { IProfileUser } from "@/types/profile";
 import jwtDecode from "jwt-decode";
 import type { GetServerSideProps, NextPage } from "next";
 import Image from "next/image";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import EditIcon from "../assets/EditIcon.svg";
 import InstagramBlack from "../assets/InstagramBlack.svg";
@@ -59,13 +65,25 @@ const Profile: NextPage<{ user: IProfileUser }> = ({ user }) => {
   const size = useWindowSize();
   const windowSize = size.width;
   const { register, handleSubmit } = useForm<ProfileInput>();
+  const [photo, setPhoto] = useState<File | null>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
 
   return (
     <div className="flex min-h-screen flex-col max-w-full">
       <Navbar />
       <form
         onSubmit={handleSubmit(async (data) => {
-          updateUserProfile(data)
+          let photoURL: string | undefined = undefined;
+          if (photo) {
+            try {
+              const res = await uploadPhoto([photo]);
+              photoURL = res[0];
+            } catch {
+              alert("Gagal mengupload foto. Harap coba lagi");
+              return;
+            }
+          }
+          updateUserProfile(photoURL ? { ...data, photoURL } : data)
             .then(() => {
               alert("Berhasil mengubah profile");
             })
@@ -75,28 +93,54 @@ const Profile: NextPage<{ user: IProfileUser }> = ({ user }) => {
         })}
         className="bg-white rounded-lg drop-shadow-2xl my-16 p-8 w-[80%] border-2 m-auto"
       >
-        <h1 className="text-blue-primary text-6xl mb-5 font-bold text-center md:text-left">
+        <h1 className="text-blue-primary text-5xl mb-5 font-bold font-rubik text-center md:text-left">
           Detail Profile
         </h1>
         <div
-          className={`flex flex-row ${windowSize <= 1200 ? "flex-wrap" : ""}`}
+          className={`flex flex-row  items-center gap-20 ${
+            windowSize <= 1200 ? "flex-wrap" : ""
+          }`}
         >
-          <div
-            className={`relative h-fit ${
+          <input
+            type="file"
+            accept="image/*"
+            className="hidden"
+            ref={fileRef}
+            onChange={(e) => {
+              if (e.target.files) {
+                setPhoto(e.target.files[0]);
+              }
+            }}
+          />
+          <button
+            type="button"
+            className={`relative aspect-square rounded-full flex-shrink-0 group ${
               windowSize <= 1200 ? "mx-auto w-[30%] mb-[30%]" : "w-[20%]"
             }`}
+            onClick={() => fileRef.current?.click()}
           >
             <Image
-              src={SampleProfile}
+              src={
+                photo
+                  ? URL.createObjectURL(photo)
+                  : user.photo
+                  ? user.photo.url
+                  : SampleProfile
+              }
+              fill
               alt="Picture of the author"
-              className="absolute bg-no-repeat bg-contain bg-left h-100 w-[87%]"
+              className="object-cover bg-left rounded-full w-full h-full"
             />
-            <Image
-              src={EditIcon}
-              alt="Picture of the author"
-              className="absolute bg-no-repeat bg-contain bg-left h-100 w-[15%] m-[37%]"
-            />
-          </div>
+            <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 duration-300 flex items-center justify-center bg-white/50">
+              <Image
+                src={EditIcon}
+                alt="Picture of the author"
+                height={72}
+                width={72}
+                className="bg-no-repeat bg-contain bg-left"
+              />
+            </div>
+          </button>
           <div className="w-[100%] md:w-[80%]">
             <div className="flex flex-wrap -mx-3 mb-2">
               <div className="w-full md:w-1/2 px-3 mb-1 md:mb-0">

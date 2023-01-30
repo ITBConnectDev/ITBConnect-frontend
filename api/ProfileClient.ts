@@ -33,3 +33,11 @@ export async function updateUserAchievement(id: number, data: any) {
 export async function deleteUserAchievement(id: number) {
   return await request(`/profile/achievements/${id}`, "DELETE");
 }
+
+export async function uploadPhoto(files: File[]) {
+  const formData = new FormData();
+  files.forEach((file) => {
+    formData.append("files", file);
+  });
+  return await request("/upload", "POST", formData);
+}

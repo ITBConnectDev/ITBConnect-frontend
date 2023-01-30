@@ -6,7 +6,10 @@ export interface IProfileUser {
   major: string;
   year: number;
   nim: string;
-  photoURL: string | null;
+  photo: {
+    id: number;
+    url: string;
+  } | null;
   profile: {
     id: number;
     bio: string;
