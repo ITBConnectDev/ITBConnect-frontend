@@ -21,3 +21,11 @@ export async function getUserAchievements(userId: number, page = 1) {
     pageTotal: number;
   }>(`/profile/${userId}/achievements?page=${page}`, "GET");
 }
+
+export async function addUserAchievement(data: any) {
+  return await request("/profile/achievements", "POST", data);
+}
+
+export async function updateUserAchievement(id: number, data: any) {
+  return await request(`/profile/achievements/${id}`, "PUT", data);
+}
