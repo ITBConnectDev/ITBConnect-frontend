@@ -29,3 +29,7 @@ export async function addUserAchievement(data: any) {
 export async function updateUserAchievement(id: number, data: any) {
   return await request(`/profile/achievements/${id}`, "PUT", data);
 }
+
+export async function deleteUserAchievement(id: number) {
+  return await request(`/profile/achievements/${id}`, "DELETE");
+}

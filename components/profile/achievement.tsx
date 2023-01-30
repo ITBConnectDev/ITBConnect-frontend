@@ -1,4 +1,8 @@
-import { addUserAchievement, updateUserAchievement } from "@/api/ProfileClient";
+import {
+  addUserAchievement,
+  deleteUserAchievement,
+  updateUserAchievement,
+} from "@/api/ProfileClient";
 import AddIcon from "@/assets/AddIcon.svg";
 import EditTextIcon from "@/assets/EditTextIcon.svg";
 import useAchievements from "@/hooks/useAchievements";
@@ -285,7 +289,31 @@ function AddEditButton({ achievement }: { achievement?: IAchievement }) {
               {...register("description")}
             />
           </div>
-          <div className="flex justify-end">
+          <div
+            className={classNames(
+              "flex items-end",
+              isEdit ? "justify-between" : "justify-end"
+            )}
+          >
+            {isEdit && (
+              <button
+                type="button"
+                className="text-gray-600 text-base hover:text-black hover:underline"
+                onClick={() => {
+                  deleteUserAchievement(achievement.id)
+                    .then(() => {
+                      setIsOpen(false);
+                      queryClient.invalidateQueries("achievements");
+                      alert("Achievement berhasil dihapus");
+                    })
+                    .catch(() => {
+                      alert("Achievement gagal dihapus");
+                    });
+                }}
+              >
+                Hapus Achievement
+              </button>
+            )}
             <button
               type="submit"
               className="py-2 px-10 bg-white border-2 rounded-full border-secondary font-bold text-xl"
