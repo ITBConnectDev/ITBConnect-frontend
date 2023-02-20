@@ -50,8 +50,8 @@ const Home: NextPage = () => {
                 alt="Picture of the author"
                 className="m-auto bg-no-repeat bg-contain h-full"
               />
-              <div className="bg-green-200 w-6/12 m-auto mt-6">
-                <h1 className="text-center font-bold">Ini contoh</h1>
+              <div className="bg-green-200 w-auto m-auto mt-6">
+                <p className="text-center font-extrabold">#UniteITBInnovate #ITBInnovationUnity #CollaborateITBThrive</p>
               </div>
               <h1 className="text-center font-bold mt-6">
                 Visioned to remove limitations between groups, encourage and
@@ -74,10 +74,10 @@ const Home: NextPage = () => {
               windowSize > 1200 ? "top-[-35vmin]" : ""
             }`}
           >
-            <div className="text-5xl font-bold text-white text-center mb-16">
+            <div className="text-4xl md:text-5xl font-bold text-white text-center mb-16">
               Feature Present
             </div>
-            <div className="p-8 mx-24 bg-green-100 rounded-lg">
+            <div className="p-8 mx-8 md:mx-24 bg-green-100 rounded-lg">
               <div className="grid grid-cols-4 gap-4">
                 <div
                   className={`${
@@ -100,25 +100,12 @@ const Home: NextPage = () => {
                   <h1
                     className={`${
                       windowSize > 1200 ? "" : "text-center"
-                    } text-blue-primary text-5xl font-bold mb-5`}
+                    } text-blue-primary text-2xl md:text-5xl font-bold mb-5`}
                   >
                     Competition Info
                   </h1>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Maecenas mollis convallis risus, eu porta est sodales ac. In
-                    quis diam in sem auctor pharetra. Nunc scelerisque massa
-                    quam, eget sollicitudin quam venenatis quis. Etiam at
-                    ultricies mauris. Donec vel varius felis. Fusce id
-                    sollicitudin urna, in ullamcorper tortor. Nulla gravida orci
-                    vitae gravida aliquam. In semper ornare purus, sed viverra
-                    dui dictum eu. Sed gravida mi nibh, quis rhoncus enim varius
-                    id. Etiam vitae sollicitudin odio. Integer pulvinar nunc
-                    consectetur molestie vehicula. Cras dignissim ac erat non
-                    ultrices. Orci varius natoque penatibus et magnis dis
-                    parturient montes, nascetur ridiculus mus. Proin mi ligula,
-                    pharetra non arcu ac, laoreet viverra turpis. Cras posuere
-                    tincidunt volutpat.
+                  With the Info Competition feature, students have the opportunity to showcase their skills and knowledge, competing against each other in a friendly and supportive environment. Whether you're looking to build your resume, connect with others in your field, or simply challenge yourself, ITBConnect's Info Competition is the perfect platform to help you achieve your goals. So why wait? Join ITBConnect today and start competing!
                   </p>
                   <div
                     className={`${
@@ -130,7 +117,7 @@ const Home: NextPage = () => {
                 </div>
               </div>
             </div>
-            <div className="p-8 mx-24 bg-green-100 rounded-lg mt-6">
+            <div className="p-8 mx-8 md:mx-24 bg-green-100 rounded-lg mt-6">
               <div className="grid grid-cols-4 gap-4">
                 <div
                   className={`${
@@ -155,23 +142,10 @@ const Home: NextPage = () => {
                       windowSize > 1200 ? "" : "text-center"
                     } text-blue-primary text-5xl font-bold mb-5`}
                   >
-                    Cari Teman
+                    Find Friends
                   </h1>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Maecenas mollis convallis risus, eu porta est sodales ac. In
-                    quis diam in sem auctor pharetra. Nunc scelerisque massa
-                    quam, eget sollicitudin quam venenatis quis. Etiam at
-                    ultricies mauris. Donec vel varius felis. Fusce id
-                    sollicitudin urna, in ullamcorper tortor. Nulla gravida orci
-                    vitae gravida aliquam. In semper ornare purus, sed viverra
-                    dui dictum eu. Sed gravida mi nibh, quis rhoncus enim varius
-                    id. Etiam vitae sollicitudin odio. Integer pulvinar nunc
-                    consectetur molestie vehicula. Cras dignissim ac erat non
-                    ultrices. Orci varius natoque penatibus et magnis dis
-                    parturient montes, nascetur ridiculus mus. Proin mi ligula,
-                    pharetra non arcu ac, laoreet viverra turpis. Cras posuere
-                    tincidunt volutpat.
+                  With its Find Friends feature, students can connect with others who share their major and interests, forming a community of like-minded individuals who can support and inspire each other. Whether you're looking for study partners, networking opportunities, or simply a place to connect with others, ITBConnect's Find Friends feature is the perfect solution. So why wait? Join ITBConnect today and start building meaningful connections with others!
                   </p>
                   <div
                     className={`${
@@ -212,11 +186,18 @@ const Home: NextPage = () => {
                 } relative`}
               />
             </div>
-            <div className="bg-gray-200 text-5xl text-blue-primary font-bold mx-36 px-16 py-12 min-h-[500px] mt-12">
-              <h1>
-                Explore partners from around ITB, to help you achieve and
-                overcome any challenges you face!
-              </h1>
+            <div className="bg-gray-200 text-5xl text-blue-primary font-bold mx-4 md:mx-36 px-8 md:px-16 py-12 min-h-[500px] mt-12">
+              <p className="text-xl text-black">
+              ITBConnect is a simple and intuitive platform that makes it easy for college students to connect, compete, and bring their ideas to life. Here's how it works:
+              <ol className="ml-1">
+                <li>1. Sign up: To get started, simply sign up for an ITBConnect account using your college email address. This will give you access to all of the platform's features.</li>
+                <li>2. Explore: Browse the platform to find information about upcoming competitions, connect with others who share your major and interests, and explore funding opportunities for your proposals.</li>
+                <li>3. Compete: If you're interested in participating in the Info Competition, simply sign up and start competing. You'll have the opportunity to showcase your skills and knowledge, and compete against other students in your field.</li>
+                <li>4. Connect: With the Find Friends feature, you can connect with others who share your major and interests. Whether you're looking for study partners, networking opportunities, or simply a place to connect with others, ITBConnect makes it easy to find and connect with like-minded individuals.</li>
+                <li>5. Fund: If you have a proposal that you would like to bring to life, ITBConnect's Proposal Funding feature can help. Simply submit your proposal, and if it meets the criteria, you may be eligible for funding to help make your idea a reality.</li>
+              </ol>
+              With ITBConnect, college students have the tools and resources they need to succeed. So why wait? Sign up today and start exploring the endless possibilities of ITBConnect!
+              </p>
             </div>
           </div>
           <div className={`relative`}>

@@ -16,7 +16,7 @@ class Footer extends Component {
             <Image
               src={IconWhite}
               alt="Picture of the author"
-              className="h-full bg-no-repeat bg-contain w-[10rem]"
+              className="h-full bg-no-repeat bg-contain w-[7rem] md:w-[10rem]"
             />
           </div>
           <div className="flex">
