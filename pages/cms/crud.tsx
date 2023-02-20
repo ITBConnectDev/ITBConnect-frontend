@@ -5,6 +5,16 @@ import Navbar from "../../components/navbar";
 import { useWindowSize } from "../../utils/windowsize";
 import { useState, useEffect } from "react";
 import { useRouter } from 'next/router'
+import { useForm } from "react-hook-form";
+
+type crudValues = {
+  title: String,
+  organizer: String,
+  datetime: String,
+  details: String,
+  tags: String,
+  poster: String
+}
 
 const CMSCrud: NextPage = () => {
   const query = useRouter();
@@ -16,13 +26,11 @@ const CMSCrud: NextPage = () => {
     setWindowSize(size.width);
   }, [size.width]);
 
-  let data = [[
-    "data1", "data1","data1", "data1","data1", "data1","data1"
-  ],[
-    "data1", "data1","data1", "data1","data1", "data1","data1"
-  ],[
-    "data1", "data1","data1", "data1","data1", "data1","data1"
-  ]]
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<crudValues>();
 
   return (
     <div className="flex min-h-screen flex-col max-w-full">
@@ -32,23 +40,23 @@ const CMSCrud: NextPage = () => {
         <form className="mt-6">
           <div className="mb-6">
             <label className="block mb-2 text-2xl font-bold text-black">Title</label>
-            <input type="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Tulis deskripsi proposal di sini" required />
+            <input {...register("title")} type="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Tulis deskripsi proposal di sini" required />
           </div>
           <div className="mb-6">
             <label className="block mb-2 text-2xl font-bold text-black">Organizer</label>
-            <input type="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Tulis deskripsi proposal di sini" required />
+            <input {...register("organizer")} type="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Tulis deskripsi proposal di sini" required />
           </div>
           <div className="mb-6">
             <label className="block mb-2 text-2xl font-bold text-black">Date and Time</label>
-            <input type="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Tulis deskripsi proposal di sini" required />
+            <input {...register("datetime")} type="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Tulis deskripsi proposal di sini" required />
           </div>
           <div className="mb-6">
             <label className="block mb-2 text-2xl font-bold text-black">Details</label>
-            <textarea id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Tulis deskripsi proposal di sini" required />
+            <textarea {...register("details")} id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Tulis deskripsi proposal di sini" required />
           </div>
           <div className="mb-6">
             <label className="block mb-2 text-2xl font-bold text-black">Tags</label>
-            <input type="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Tulis deskripsi proposal di sini" required />
+            <input {...register("tags")} type="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " placeholder="Tulis deskripsi proposal di sini" required />
           </div>
           <div className="mb-6">
             <label className="block mb-2 text-2xl font-bold text-black">Poster</label>
@@ -59,7 +67,7 @@ const CMSCrud: NextPage = () => {
                         <p className="mb-2 text-sm text-gray-500"><span className="font-semibold">Click to upload</span> or drag and drop</p>
                         <p className="text-xs text-gray-500">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
                     </div>
-                    <input id="dropzone-file" type="file" className="hidden" />
+                    <input {...register("poster")} id="dropzone-file" type="file" className="hidden" />
                 </label>
             </div> 
           </div>
