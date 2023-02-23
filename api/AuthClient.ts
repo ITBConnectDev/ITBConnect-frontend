@@ -20,8 +20,13 @@ export async function logout() {
   return await request("/auth/logout", "POST");
 }
 
-export async function getAuthUser() {
-  return await request<IAuthUser | undefined>("/auth");
+export async function getAuthUser(headers?: any) {
+  return await request<IAuthUser | undefined>(
+    "/auth",
+    "GET",
+    undefined,
+    headers
+  );
 }
 
 export async function getMajors() {
