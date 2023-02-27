@@ -20,6 +20,7 @@ import { GetServerSideProps, NextPage } from "next";
 import jwtDecode from "jwt-decode";
 import { getAllFriend, getFriendProfile } from "@/api/FriendsClient";
 import { useQuery } from "react-query";
+import FriendAchievements from "@/components/profile/friendAchievement";
 
 const FriendDetailPage: NextPage = () => {
   const size = useWindowSize();
@@ -30,12 +31,16 @@ const FriendDetailPage: NextPage = () => {
   const [page, setPage] = useState(1);
   const { data } = useQuery(
     ["user", userId],
-    () => {
-      getUserProfile(parseInt(userId));
-    },
+    () => getUserProfile(parseInt(userId)),
     { enabled: userId !== undefined }
   );
-  console.log(userId, data);
+  const { data: achievements } = useQuery(
+    ["userAchievements", userId],
+    () => getUserAchievements(parseInt(userId), page),
+    { enabled: userId !== undefined }
+  );
+
+  console.log(data);
   useEffect(() => {
     setWindowSize(size.width);
   }, [size.width]);
@@ -109,13 +114,13 @@ const FriendDetailPage: NextPage = () => {
                 <label className="block text-black text-md font-bold">
                   Nama
                 </label>
-                <p className="text-md text-gray-600">John Doe</p>
+                <p className="text-md text-gray-600">{data?.fullname}</p>
               </div>
               <div className="w-full md:w-1/2 px-3">
                 <label className="block text-black text-md font-bold">
                   Nama Panggilan
                 </label>
-                <p className="text-md text-gray-600">John</p>
+                <p className="text-md text-gray-600">{data?.nickname}</p>
               </div>
             </div>
             <div className="flex flex-wrap -mx-3 mb-2">
@@ -123,138 +128,61 @@ const FriendDetailPage: NextPage = () => {
                 <label className="block text-black text-md font-bold">
                   Jurusan
                 </label>
-                <p className="text-md text-gray-600">John Doe</p>
+                <p className="text-md text-gray-600">{data?.major}</p>
               </div>
               <div className="w-full md:w-1/2 px-3">
                 <label className="block text-black text-md font-bold">
                   NIM
                 </label>
-                <p className="text-md text-gray-600">13520000</p>
+                <p className="text-md text-gray-600">{data?.nim}</p>
               </div>
             </div>
           </div>
         </div>
         <div className="w-[100%] mt-5">
           <label className="block text-black text-md font-bold">Bio</label>
-          <p className="text-md text-gray-600">John Doe</p>
+          <p className="text-md text-gray-600">{data?.profile?.bio}</p>
         </div>
         <div className="flex flex-row justify-between mt-5">
           <div className="flex flex-row">
-            <button>
-              <Image
-                src={LinkedinBlack}
-                alt="LinkedIn logo"
-                className="bg-no-repeat bg-contain bg-left h-100 w-fit"
-              />
-            </button>
-            <button className="mx-5">
-              <Image
-                src={InstagramBlack}
-                alt="Instagram Logo"
-                className="bg-no-repeat bg-contain bg-left h-100 w-fit"
-              />
-            </button>
+            {data?.profile?.linkedinURL && (
+              <Link href={data?.profile.linkedinURL}>
+                <button>
+                  <Image
+                    src={LinkedinBlack}
+                    alt="LinkedIn logo"
+                    className="bg-no-repeat bg-contain bg-left h-100 w-fit"
+                  />
+                </button>
+              </Link>
+            )}
+            {data?.profile?.instagramURL && (
+              <Link href={data?.profile.instagramURL}>
+                <button>
+                  <Image
+                    src={InstagramBlack}
+                    alt="Instagram Logo"
+                    className="bg-no-repeat bg-contain bg-left h-100 w-fit"
+                  />
+                </button>
+              </Link>
+            )}
           </div>
-          <button
-            className="bg-blue-primary text-white text-sm lg:px-5 py-3 px-4 rounded-md hover:bg-blue-500 flex flex-row items-center"
-            type="button"
-          >
-            <Image src={IconWA} alt="Whatsapp Logo" className="mr-2" />
-            08080880808080
-          </button>
+          {data?.profile?.phoneNumber && (
+            <button
+              className="bg-blue-primary text-white text-sm lg:px-5 py-3 px-4 rounded-md hover:bg-blue-500 flex flex-row items-center"
+              type="button"
+            >
+              <Image src={IconWA} alt="Whatsapp Logo" className="mr-2" />
+              {data?.profile.phoneNumber}
+            </button>
+          )}
         </div>
       </div>
       {/* Bagian Detail */}
-      <div className="mx-auto">
+      <div className="mx-auto w-full">
         <div className="flex flex-row flex-wrap justify-center content-center">
-          <div
-            className={`bg-white rounded-lg drop-shadow-2xl p-8 h-fit border-2 ${
-              windowSize <= 1200 ? "mx-auto w-[80%] mb-5" : "w-[38%]"
-            }`}
-          >
-            <div className="flex flex-row justify-between mb-5">
-              <h1 className="text-green-primary text-3xl">Achievement</h1>
-            </div>
-            {/* TODO: Integrate with Backend */}
-            <div>
-              <div className="flex flex-row justify-between">
-                <h1 className="text-xl">
-                  Juara 1 Data Science Competition Arkavidia 8.0
-                </h1>
-              </div>
-              <p className="text-gray-500 my-1">
-                Issued by HMIF Institut Teknologi Bandung . Mar 2023
-              </p>
-              <p className="text-gray-600 mb-2">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque,
-                egestas sapien nunc, quis viverra nisl vitae risus, lectus. Est
-                ornare hac scelerisque tempor. A, quam in faucibus bibendum.
-                Cursus dictumst etiam quis molestie.
-              </p>
-              <hr />
-            </div>
-            {/* TODO: Integrate pagination with Backend */}
-            <nav aria-label="Page navigation example" className="m-auto mb-8">
-              <ul className="inline-flex items-center -space-x-px">
-                <li onClick={() => setPage(Math.max(page - 1, 0))}>
-                  <a
-                    href="#"
-                    className="block px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                  >
-                    <span className="sr-only">Previous</span>
-                    <svg
-                      aria-hidden="true"
-                      className="w-5 h-5"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                        clip-rule="evenodd"
-                      ></path>
-                    </svg>
-                  </a>
-                </li>
-                {/* {data &&
-                  Array.from(Array(data.data.pageTotal), (e, i) => {
-                    return (
-                      <li key={i} onClick={() => setPage(Math.max(i + 1, 0))}>
-                        <a
-                          href="#"
-                          className="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                        >
-                          {i + 1}
-                        </a>
-                      </li>
-                    );
-                  })}
-                <li
-                  onClick={() =>
-                    setPage(Math.min(page + 1, data.data.pageTotal))
-                  }
-                >
-                  <a className="block px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                    <span className="sr-only">Next</span>
-                    <svg
-                      aria-hidden="true"
-                      className="w-5 h-5"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                        clip-rule="evenodd"
-                      ></path>
-                    </svg>
-                  </a>
-                </li> */}
-              </ul>
-            </nav>
-          </div>
+          <FriendAchievements userId={parseInt(userId)} />
           <div
             className={`h-fit ${
               windowSize <= 1200 ? "mx-auto w-[80%]" : "ml-11 w-[40%]"
@@ -267,11 +195,14 @@ const FriendDetailPage: NextPage = () => {
                 </h1>
                 <div className="flex flex-row mr-4"></div>
               </div>
-              {/* TODO: Integrate skills with Backend */}
               <div className="flex flex-row flex-wrap">
-                <h1 className="w-[50%] mb-2">Data scientist</h1>
-                <h1 className="w-[50%]">UI UX</h1>
-                <h1 className="w-[50%]">Web</h1>
+                {data?.userInterests?.map((interest) => {
+                  return (
+                    <h1 key={interest.id} className="w-[50%] mb-2">
+                      {interest.interest}
+                    </h1>
+                  );
+                })}
               </div>
             </div>
             <div className="bg-white rounded-lg drop-shadow-2xl p-8 w-[100%] border-2 mb-5">
@@ -279,10 +210,14 @@ const FriendDetailPage: NextPage = () => {
                 <h1 className="text-green-primary text-3xl">Fluent In</h1>
                 <div className="flex flex-row mr-4"></div>
               </div>
-              {/* TODO: Integrate language with Backend */}
               <div className="flex flex-row flex-wrap">
-                <h1 className="w-[100%] mb-2">Bahasa Indonesia</h1>
-                <h1 className="w-[100%]">English</h1>
+                {data?.userLanguages?.map((language) => {
+                  return (
+                    <h1 key={language.id} className="w-[100%] mb-2">
+                      {language.language}
+                    </h1>
+                  );
+                })}
               </div>
             </div>
           </div>

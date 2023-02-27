@@ -1,5 +1,8 @@
+import { getAllFriend, getFilteredFriend } from "@/api/FriendsClient";
 import type { NextPage } from "next";
 import Image from "next/image";
+import { useState } from "react";
+import { useQuery } from "react-query";
 import Index1 from "../assets/Index1.svg";
 import Index2 from "../assets/Index2.png";
 import ExploreCard from "../components/exploreCard";
@@ -10,6 +13,18 @@ import { useWindowSize } from "../utils/windowsize";
 const Explore: NextPage = () => {
   const size = useWindowSize();
   const windowSize = size.width;
+  const [filter, setFilter] = useState("");
+  const { data, refetch } = useQuery("explore", () => {
+    if (filter) {
+      return getFilteredFriend(filter);
+    } else {
+      return getAllFriend();
+    }
+  });
+  const handleFilter = (e: any) => {
+    e.preventDefault();
+    refetch();
+  };
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -42,20 +57,11 @@ const Explore: NextPage = () => {
           windowSize > 1200 ? "mx-64" : "mx-7"
         }`}
       >
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas mollis
-        convallis risus, eu porta est sodales ac. In quis diam in sem auctor
-        pharetra. Nunc scelerisque massa quam, eget sollicitudin quam venenatis
-        quis. Etiam at ultricies mauris. Donec vel varius felis. Fusce id
-        sollicitudin urna, in ullamcorper tortor. Nulla gravida orci vitae
-        gravida aliquam. In semper ornare purus, sed viverra dui dictum eu. Sed
-        gravida mi nibh, quis rhoncus enim varius id. Etiam vitae sollicitudin
-        odio. Integer pulvinar nunc consectetur molestie vehicula. Cras
-        dignissim ac erat non ultrices. Orci varius natoque penatibus et magnis
-        dis parturient montes, nascetur ridiculus mus. Proin mi ligula, pharetra
-        non arcu ac, laoreet viverra turpis. Cras posuere tincidunt volutpat.
+        Find your friend here
       </p>
       <form
         className={`mt-8 flex flex-row ${windowSize > 1200 ? "mx-56" : "mx-7"}`}
+        onSubmit={handleFilter}
       >
         <div className="relative w-full">
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -81,6 +87,7 @@ const Explore: NextPage = () => {
             className="block w-full px-4 py-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500"
             placeholder="Search"
             required
+            onChange={(e) => setFilter(e.target.value)}
           />
         </div>
         <button
@@ -96,62 +103,25 @@ const Explore: NextPage = () => {
           windowSize > 1200 ? "mx-36" : "mx-7"
         }`}
       >
-        <div
-          className={`${
-            windowSize > 1200 ? "col-span-1" : "col-span-2 mx-auto"
-          }`}
-        >
-          <ExploreCard
-            link=""
-            image=""
-            nama_orang="<Nama Orang>"
-            role="<Role>"
-            company="<Company>"
-            tag="business case"
-          />
-        </div>
-        <div
-          className={`${
-            windowSize > 1200 ? "col-span-1" : "col-span-2 mx-auto"
-          }`}
-        >
-          <ExploreCard
-            link=""
-            image=""
-            nama_orang="<Nama Orang>"
-            role="<Role>"
-            company="<Company>"
-            tag="business case"
-          />
-        </div>
-        <div
-          className={`${
-            windowSize > 1200 ? "col-span-1" : "col-span-2 mx-auto"
-          }`}
-        >
-          <ExploreCard
-            link=""
-            image=""
-            nama_orang="<Nama Orang>"
-            role="<Role>"
-            company="<Company>"
-            tag="business case"
-          />
-        </div>
-        <div
-          className={`${
-            windowSize > 1200 ? "col-span-1" : "col-span-2 mx-auto"
-          }`}
-        >
-          <ExploreCard
-            link=""
-            image=""
-            nama_orang="<Nama Orang>"
-            role="<Role>"
-            company="<Company>"
-            tag="business case"
-          />
-        </div>
+        {data?.friends?.map((user) => {
+          return (
+            <div
+              key={user.id}
+              className={`${
+                windowSize > 1200 ? "col-span-1" : "col-span-2 mx-auto"
+              }`}
+            >
+              <ExploreCard
+                link={`/friends/${user.id}`}
+                image={user.photo}
+                nama_orang={user.fullname}
+                company={user.major}
+                role={user.userInterests?.[0].interest}
+                tag={user.userInterests?.[0].interest}
+              />
+            </div>
+          );
+        })}
       </div>
       <Footer />
     </div>
