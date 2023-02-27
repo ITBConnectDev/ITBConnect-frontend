@@ -23,8 +23,7 @@ const Home: NextPage = () => {
   return (
     <div className="flex min-h-screen flex-col">
       <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>ITBConnect</title>
         <link
           rel="stylesheet"
           href="https://unpkg.com/flowbite@1.5.5/dist/flowbite.min.css"

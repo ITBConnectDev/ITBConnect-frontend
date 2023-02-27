@@ -60,6 +60,14 @@ function Navbar() {
             </li>
             <li>
               <Link
+                href="/explore"
+                className="mt-1 block py-2 pl-3 pr-4 text-black  rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0"
+              >
+                Explore
+              </Link>
+            </li>
+            <li>
+              <Link
                 href="/about-us"
                 className="mt-1 block py-2 pl-3 pr-4 text-black  rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0"
               >
