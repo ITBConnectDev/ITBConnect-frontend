@@ -109,11 +109,11 @@ const Home: NextPage = () => {
                     With the Info Competition feature, students have the
                     opportunity to showcase their skills and knowledge,
                     competing against each other in a friendly and supportive
-                    environment. Whether you're looking to build your resume,
-                    connect with others in your field, or simply challenge
-                    yourself, ITBConnect's Info Competition is the perfect
-                    platform to help you achieve your goals. So why wait? Join
-                    ITBConnect today and start competing!
+                    environment. Whether you&apos;re looking to build your
+                    resume, connect with others in your field, or simply
+                    challenge yourself, ITBConnect&apos;s Info Competition is
+                    the perfect platform to help you achieve your goals. So why
+                    wait? Join ITBConnect today and start competing!
                   </p>
                   <div
                     className={`${
@@ -156,11 +156,11 @@ const Home: NextPage = () => {
                     With its Find Friends feature, students can connect with
                     others who share their major and interests, forming a
                     community of like-minded individuals who can support and
-                    inspire each other. Whether you're looking for study
+                    inspire each other. Whether you&apos;re looking for study
                     partners, networking opportunities, or simply a place to
-                    connect with others, ITBConnect's Find Friends feature is
-                    the perfect solution. So why wait? Join ITBConnect today and
-                    start building meaningful connections with others!
+                    connect with others, ITBConnect&apos;s Find Friends feature
+                    is the perfect solution. So why wait? Join ITBConnect today
+                    and start building meaningful connections with others!
                   </p>
                   <div
                     className={`${
@@ -205,12 +205,12 @@ const Home: NextPage = () => {
               <p className="text-xl text-black">
                 ITBConnect is a simple and intuitive platform that makes it easy
                 for college students to connect, compete, and bring their ideas
-                to life. Here's how it works:
+                to life. Here&apos;s how it works:
                 <ol className="ml-1">
                   <li>
                     1. Sign up: To get started, simply sign up for an ITBConnect
                     account using your college email address. This will give you
-                    access to all of the platform's features.
+                    access to all of the platform&apos;s features.
                   </li>
                   <li>
                     2. Explore: Browse the platform to find information about
@@ -219,24 +219,25 @@ const Home: NextPage = () => {
                     your proposals.
                   </li>
                   <li>
-                    3. Compete: If you're interested in participating in the
-                    Info Competition, simply sign up and start competing. You'll
-                    have the opportunity to showcase your skills and knowledge,
-                    and compete against other students in your field.
+                    3. Compete: If you&apos;re interested in participating in
+                    the Info Competition, simply sign up and start competing.
+                    You&apos;ll have the opportunity to showcase your skills and
+                    knowledge, and compete against other students in your field.
                   </li>
                   <li>
                     4. Connect: With the Find Friends feature, you can connect
                     with others who share your major and interests. Whether
-                    you're looking for study partners, networking opportunities,
-                    or simply a place to connect with others, ITBConnect makes
-                    it easy to find and connect with like-minded individuals.
+                    you&apos;re looking for study partners, networking
+                    opportunities, or simply a place to connect with others,
+                    ITBConnect makes it easy to find and connect with
+                    like-minded individuals.
                   </li>
                   <li>
                     5. Fund: If you have a proposal that you would like to bring
-                    to life, ITBConnect's Proposal Funding feature can help.
-                    Simply submit your proposal, and if it meets the criteria,
-                    you may be eligible for funding to help make your idea a
-                    reality.
+                    to life, ITBConnect&apos;s Proposal Funding feature can
+                    help. Simply submit your proposal, and if it meets the
+                    criteria, you may be eligible for funding to help make your
+                    idea a reality.
                   </li>
                 </ol>
                 With ITBConnect, college students have the tools and resources
