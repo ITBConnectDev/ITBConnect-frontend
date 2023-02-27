@@ -5,6 +5,7 @@ import Navbar from "../../components/navbar";
 import { useWindowSize } from "../../utils/windowsize";
 import { useState, useEffect } from "react";
 import { useRouter } from 'next/router'
+import Link from "next/link";
 
 const CMSCompetition: NextPage = () => {
     const router = useRouter();
@@ -52,10 +53,10 @@ const CMSCompetition: NextPage = () => {
         <div className="text-sm font-medium text-center text-gray-500">
             <ul className="flex flex-wrap -mb-px">
                 <li className="mr-2">
-                    <a href="/cms/event" className="inline-block p-4 border-b-2 border-transparent rounded-t-lg">Event</a>
+                    <Link href="/cms/event" className="inline-block p-4 border-b-2 border-transparent rounded-t-lg">Event</Link>
                 </li>
                 <li className="mr-2">
-                    <a href="/cms/competition" className="inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active dark:text-blue-500 dark:border-blue-500" aria-current="page">Competition</a>
+                    <Link href="/cms/competition" className="inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active dark:text-blue-500 dark:border-blue-500" aria-current="page">Competition</Link>
                 </li>
             </ul>
         </div>
@@ -98,7 +99,7 @@ const CMSCompetition: NextPage = () => {
                 <tbody>
                     {data && data.map((d, i) => {
                         return(
-                            <tr className="bg-white border-b bg-gray-200">
+                            <tr key={i} className="bg-white border-b bg-gray-200">
                                 <th scope="row" className="px-6 py-4 font-medium whitespace-nowrap">
                                     {d[0]}
                                 </th>
