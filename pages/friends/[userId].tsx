@@ -7,21 +7,38 @@ import IconWA from "../../assets/IconWA.svg";
 import InstagramBlack from "../../assets/InstagramBlack.svg";
 import LinkedinBlack from "../../assets/LinkedinBlack.svg";
 import sampleOrang from "../../assets/sampleOrang.svg";
-import index1 from "../../assets/index1.svg";
+import index1 from "../../assets/Index1.svg";
 import index6 from "../../assets/Index6.svg";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import useAchievements from "@/hooks/useAchievements";
+import { useParams } from "react-router-dom";
+import { useRouter } from "next/router";
+import { getUserAchievements, getUserProfile } from "@/api/ProfileClient";
+import { IAchievement, IProfileUser } from "@/types/profile";
+import { GetServerSideProps, NextPage } from "next";
+import jwtDecode from "jwt-decode";
+import { getAllFriend, getFriendProfile } from "@/api/FriendsClient";
+import { useQuery } from "react-query";
 
-function FriendDetailPage() {
+const FriendDetailPage: NextPage = () => {
   const size = useWindowSize();
+  // BESOK GET USER based on user ID, pake data type USER, trus achievement dll
+  const router = useRouter();
+  const userId = router.query.userId as string;
   const [windowSize, setWindowSize] = useState(0);
   const [page, setPage] = useState(1);
-  const [data, setData] = useState<any>([]);
-
+  const { data } = useQuery(
+    ["user", userId],
+    () => {
+      getUserProfile(parseInt(userId));
+    },
+    { enabled: userId !== undefined }
+  );
+  console.log(userId, data);
   useEffect(() => {
     setWindowSize(size.width);
   }, [size.width]);
-
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />
@@ -200,7 +217,7 @@ function FriendDetailPage() {
                     </svg>
                   </a>
                 </li>
-                {data &&
+                {/* {data &&
                   Array.from(Array(data.data.pageTotal), (e, i) => {
                     return (
                       <li key={i} onClick={() => setPage(Math.max(i + 1, 0))}>
@@ -234,7 +251,7 @@ function FriendDetailPage() {
                       ></path>
                     </svg>
                   </a>
-                </li>
+                </li> */}
               </ul>
             </nav>
           </div>
@@ -279,6 +296,6 @@ function FriendDetailPage() {
       <Footer />
     </div>
   );
-}
+};
 
 export default FriendDetailPage;
