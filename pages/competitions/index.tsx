@@ -112,7 +112,7 @@ const ListCompetition: NextPage = () => {
       <nav aria-label="Page navigation example" className="m-auto mb-8">
         <ul className="inline-flex items-center -space-x-px">
           <li onClick={() => setPage(Math.max(page - 1, 0))}>
-            <a className="block px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+            <a className="block px-3 py-2 ml-0 leading-tight rounded-l-lg bg-white text-green-500 hover:bg-green-500 hover:text-white">
               <span className="sr-only">Previous</span>
               <svg
                 aria-hidden="true"
@@ -133,14 +133,14 @@ const ListCompetition: NextPage = () => {
             Array.from(Array(data.pageTotal), (e, i) => {
               return (
                 <li key={i} onClick={() => setPage(Math.max(i + 1, 0))}>
-                  <a className="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                  <a className={`px-3 py-2 leading-tight hover:bg-green-500 hover:text-white rounded ${i + 1 === page ? "bg-green-500 text-white" : "bg-white text-green-500"}`}>
                     {i + 1}
                   </a>
                 </li>
               );
             })}
           <li onClick={() => setPage(Math.min(page + 1, data.pageTotal))}>
-            <a className="block px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+            <a className="block px-3 py-2 leading-tight rounded-r-lg bg-white text-green-500 hover:bg-green-500 hover:text-white">
               <span className="sr-only">Next</span>
               <svg
                 aria-hidden="true"
