@@ -41,7 +41,7 @@ const ListCompetition: NextPage = () => {
           className={`bg-no-repeat bg-contain h-auto "lg:w-[8%] w-[10%]" relative`}
         />
         <h1
-          className={`text-center text-8xl text-green-primary font-bold mt-[3%] lg:mx-0 mx-auto font-rubik`}
+          className={`text-center text-2xl md:text-8xl text-green-primary font-bold mt-[3%] lg:mx-0 mx-auto font-rubik`}
         >
           Competitions
         </h1>
@@ -52,17 +52,7 @@ const ListCompetition: NextPage = () => {
         />
       </div>
       <p className={`text-center mt-8 text-secondary lg:mx-64 mx-7`}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas mollis
-        convallis risus, eu porta est sodales ac. In quis diam in sem auctor
-        pharetra. Nunc scelerisque massa quam, eget sollicitudin quam venenatis
-        quis. Etiam at ultricies mauris. Donec vel varius felis. Fusce id
-        sollicitudin urna, in ullamcorper tortor. Nulla gravida orci vitae
-        gravida aliquam. In semper ornare purus, sed viverra dui dictum eu. Sed
-        gravida mi nibh, quis rhoncus enim varius id. Etiam vitae sollicitudin
-        odio. Integer pulvinar nunc consectetur molestie vehicula. Cras
-        dignissim ac erat non ultrices. Orci varius natoque penatibus et magnis
-        dis parturient montes, nascetur ridiculus mus. Proin mi ligula, pharetra
-        non arcu ac, laoreet viverra turpis. Cras posuere tincidunt volutpat.
+      With its Info Competition feature, students have the opportunity to showcase their skills and knowledge, competing against each other in a friendly and supportive environment.
       </p>
       <form className={`mt-8 flex flex-row lg:mx-56 mx-7`}>
         <div className="relative w-full">
@@ -99,7 +89,7 @@ const ListCompetition: NextPage = () => {
         </button>
       </form>
 
-      <div className={`grid grid-cols-4 gap-2 mt-12 mb-9 lg:mx-36 mx-7`}>
+      <div className={`grid grid-cols-2 md:grid-cols-4 gap-2 mt-12 mb-9 lg:mx-36 mx-7`}>
         {data &&
           data.competitions.map((d, i) => {
             return (

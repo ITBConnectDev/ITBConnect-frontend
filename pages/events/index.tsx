@@ -55,7 +55,7 @@ const ListNews: NextPage = () => {
           className={`bg-no-repeat bg-contain h-auto lg:w-[10%] w-[8%] relative`}
         />
         <h1
-          className={`text-center lg:text-8xl text-6xl text-green-primary font-bold mt-[3%] lg:mx-0 mx-auto`}
+          className={`text-center lg:text-8xl text-2xl text-green-primary font-bold mt-[3%] lg:mx-0 mx-auto`}
         >
           Event News
         </h1>

@@ -14,6 +14,7 @@ class Footer extends Component {
         <div className="flex justify-between mb-4">
           <div>
             <Image
+              onClick={() => window.location.href = "itb-connect.com"}
               src={IconWhite}
               alt="Picture of the author"
               className="h-full bg-no-repeat bg-contain w-[7rem] md:w-[10rem]"
@@ -21,26 +22,31 @@ class Footer extends Component {
           </div>
           <div className="flex">
             <Image
+              onClick={() => window.location.href = "itb-connect.com"}
               src={Instagram}
               alt="Picture of the author"
               className="h-full bg-no-repeat bg-contain w-[3rem]"
             />
             <Image
+              onClick={() => window.location.href = "itb-connect.com"}
               src={Linkedin}
               alt="Picture of the author"
               className="h-full bg-no-repeat bg-contain w-[3rem]"
             />
             <Image
+              onClick={() => window.location.href = "itb-connect.com"}
               src={Twitter}
               alt="Picture of the author"
               className="h-full bg-no-repeat bg-contain w-[3rem]"
             />
             <Image
+              onClick={() => window.location.href = "itb-connect.com"}
               src={Line}
               alt="Picture of the author"
               className="h-full bg-no-repeat bg-contain w-[3rem]"
             />
             <Image
+              onClick={() => window.location.href = "itb-connect.com"}
               src={Youtube}
               alt="Picture of the author"
               className="h-full bg-no-repeat bg-contain w-[3rem]"

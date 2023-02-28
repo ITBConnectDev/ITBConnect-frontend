@@ -38,7 +38,7 @@ const Explore: NextPage = () => {
           } relative`}
         />
         <h1
-          className={`text-center text-8xl text-green-primary font-bold mt-[3%] ${
+          className={`text-center text-2xl md:text-8xl text-green-primary font-bold mt-[3%] ${
             windowSize > 1200 ? "" : "mx-auto"
           }`}
         >
