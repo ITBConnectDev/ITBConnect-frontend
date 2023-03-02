@@ -11,10 +11,13 @@ import TempImage1 from "../assets/temp_pict_1.svg";
 import Footer from "../components/footer";
 import Navbar from "../components/navbar";
 import { useWindowSize } from "../utils/windowsize";
+import useAuth from "@/hooks/useAuth";
+import Link from "next/link";
 
 const Home: NextPage = () => {
   const [windowSize, setWindowSize] = useState(0);
   const size = useWindowSize();
+  const { user } = useAuth();
 
   useEffect(() => {
     setWindowSize(size.width);
@@ -58,9 +61,13 @@ const Home: NextPage = () => {
                 Visioned to remove limitations between groups, encourage and
                 amplify collaborations and innovations through out ITB
               </h1>
-              <div className="m-auto bg-blue-primary p-1 rounded-full w-24 h-8 text-center text-white mt-6">
-                Login
-              </div>
+              {user ? (
+                ""
+              ) : (
+                <div className="m-auto bg-blue-primary p-1 rounded-full w-24 h-8 text-center text-white mt-6">
+                  <Link href="/login">Login</Link>
+                </div>
+              )}
             </div>
             <Image
               src={Jumbotron2}

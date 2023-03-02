@@ -65,19 +65,6 @@ const ListNews: NextPage = () => {
           className={`bg-no-repeat bg-contain h-auto lg:w-[10%] w-[8%] relative`}
         />
       </div>
-      <p className={`text-center mt-8 text-secondary lg:mx-64 mx-7`}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas mollis
-        convallis risus, eu porta est sodales ac. In quis diam in sem auctor
-        pharetra. Nunc scelerisque massa quam, eget sollicitudin quam venenatis
-        quis. Etiam at ultricies mauris. Donec vel varius felis. Fusce id
-        sollicitudin urna, in ullamcorper tortor. Nulla gravida orci vitae
-        gravida aliquam. In semper ornare purus, sed viverra dui dictum eu. Sed
-        gravida mi nibh, quis rhoncus enim varius id. Etiam vitae sollicitudin
-        odio. Integer pulvinar nunc consectetur molestie vehicula. Cras
-        dignissim ac erat non ultrices. Orci varius natoque penatibus et magnis
-        dis parturient montes, nascetur ridiculus mus. Proin mi ligula, pharetra
-        non arcu ac, laoreet viverra turpis. Cras posuere tincidunt volutpat.
-      </p>
       <form className={`mt-8 flex flex-row lg:mx-56 mx-7`}>
         <div className="relative w-full">
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">

@@ -109,16 +109,7 @@ const Login: NextPage = () => {
                   })}
                 />
               </div>
-              <label className="block text-blue-primary text-sm font-bold mb-4">
-                Or login with
-              </label>
               <div className="flex items-center justify-between">
-                <button
-                  className="bg-white text-blue-primary border-blue-primary border-2 py-2 px-12 rounded focus:outline-none focus:shadow-outline"
-                  type="button"
-                >
-                  Google
-                </button>
                 <button
                   className="inline-block align-baseline bg-blue-primary hover:bg-blue-700 text-white py-2 px-12 rounded focus:outline-none focus:shadow-outline border-blue-primary border-2"
                   type="submit"
