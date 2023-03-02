@@ -85,13 +85,25 @@ function Navbar() {
 
             <li className="m-auto ml-0 bg-blue-primary p-1 rounded-full w-24 h-8 text-center text-white">
               {user ? (
-                <button type="button" onClick={() => logout()}>
-                  Logout
-                </button>
+                <>
+                  <Link href="/profile">
+                    <button type="button">My Profile</button>
+                  </Link>
+                </>
               ) : (
                 <Link href="/login">Login</Link>
               )}
             </li>
+
+            {user ? (
+              <li className="bg-red-600 p-1 rounded-full w-24 h-8 text-center text-white">
+                <button type="button" onClick={() => logout()}>
+                  Logout
+                </button>
+              </li>
+            ) : (
+              ""
+            )}
           </ul>
         </div>
       </div>
