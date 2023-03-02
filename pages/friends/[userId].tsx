@@ -29,6 +29,7 @@ const FriendDetailPage: NextPage = () => {
   const userId = router.query.userId as string;
   const [windowSize, setWindowSize] = useState(0);
   const [page, setPage] = useState(1);
+  const [showCopySuccess, setShowCopySuccess] = useState(false);
   const { data } = useQuery(
     ["user", userId],
     () => getUserProfile(parseInt(userId)),
@@ -40,7 +41,25 @@ const FriendDetailPage: NextPage = () => {
     { enabled: userId !== undefined }
   );
 
-  console.log(data);
+  const copyToClipboard = () => {
+    const url = document.location.href;
+    navigator.clipboard.writeText(url);
+    setShowCopySuccess(true);
+    setTimeout(() => {
+      setShowCopySuccess(false);
+    }, 2000);
+  };
+
+  const showCopySuccessMessage = () => {
+    return (
+      <div className="flex flex-row items-center justify-center">
+        <p className="text-green-primary text-xs font-bold">
+          Link berhasil disalin
+        </p>
+      </div>
+    );
+  };
+
   useEffect(() => {
     setWindowSize(size.width);
   }, [size.width]);
@@ -79,13 +98,15 @@ const FriendDetailPage: NextPage = () => {
               Detail Profile
             </h1>
           </div>
-          <div>
+          <div id="share">
             <button
               className="bg-blue-primary text-white text-xs w-55 lg:px-12 py-3 px-3 rounded-md hover:bg-blue-500"
               type="button"
+              onClick={copyToClipboard}
             >
               SHARE
             </button>
+            {showCopySuccess ? showCopySuccessMessage() : ""}
           </div>
         </div>
         <div
