@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import Index1 from "../assets/Index1.svg";
 import Jumbotron1 from "../assets/Jumbotron1.svg";
 import Jumbotron2 from "../assets/Jumbotron2.svg";
+import FotoCompetition from "../assets/foto_competition.svg"
+import FotoFindFriend from "../assets/foto_find_friends.svg"
 import Logo from "../assets/Logo.svg";
 import TempImage1 from "../assets/temp_pict_1.svg";
 import Footer from "../components/footer";
@@ -93,7 +95,7 @@ const Home: NextPage = () => {
                   }`}
                 >
                   <Image
-                    src={TempImage1}
+                    src={FotoCompetition}
                     alt="Picture of the author"
                     className={`bg-no-repeat bg-contain h-auto ${
                       windowSize > 1200 ? "w-[88%]" : "w-[50%]"
@@ -126,6 +128,9 @@ const Home: NextPage = () => {
                     className={`${
                       windowSize > 1200 ? "" : "mx-auto"
                     } bg-blue-primary p-1 rounded-lg w-max text-center text-white mt-6 py-3 px-12`}
+                    onClick={() => {
+                      window.location.href = "/competitions"
+                  }}
                   >
                     LEARN MORE
                   </div>
@@ -140,7 +145,7 @@ const Home: NextPage = () => {
                   }`}
                 >
                   <Image
-                    src={TempImage1}
+                    src={FotoFindFriend}
                     alt="Picture of the author"
                     className={`bg-no-repeat bg-contain h-auto ${
                       windowSize > 1200 ? "w-[88%]" : "w-[50%]"
@@ -173,6 +178,9 @@ const Home: NextPage = () => {
                     className={`${
                       windowSize > 1200 ? "" : "mx-auto"
                     } bg-blue-primary p-1 rounded-lg w-max text-center text-white mt-6 py-3 px-12`}
+                    onClick={() => {
+                      window.location.href = "/explore"
+                  }}
                   >
                     LEARN MORE
                   </div>

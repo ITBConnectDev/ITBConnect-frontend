@@ -10,6 +10,8 @@ import AboutUs1 from "../assets/AboutUs1.svg"
 import Whatsapp from "../assets/Whatsapp.svg"
 import PeopleBehind1 from "../assets/people-behind-1.svg";
 import PeopleBehind2 from "../assets/people-behind-2.svg";
+import Logo from "../assets/Logo.svg";
+import FotoMindMap from "../assets/foto_mind_map.svg";
 import { useWindowSize } from "../utils/windowsize";
 import { useState, useEffect } from "react";
 
@@ -55,7 +57,7 @@ const AboutUs: NextPage = () => {
                     <p className="text-base text-secondary font-normal">In a world of endless possibilities and endless challenges, college students embarked on a quest to shape their future. They journeyed through the treacherous landscape of higher education, armed only with their passion and their determination. Along the way, they encountered many obstacles. They struggled to find the resources they needed, to connect with others who shared their interests, and to bring their ideas to life. But they refused to be defeated. And then, a glimmer of hope appeared on the horizon. ITBConnect, a powerful and revolutionary platform, arose to empower the next generation of innovators. With its Info Competition feature, students could showcase their skills and knowledge, competing with each other in a fierce yet friendly battle. And with Explore Friends, students could connect with others who shared their major and interests, forming a community of like-minded individuals who would support and inspire each other. But ITBConnect was not just a tool for connection; it was also a weapon of change. With its proposal funding feature, students could secure the resources they needed to bring their ideas to life, igniting a fire of progress and innovation that would burn bright for generations to come. This was no mere platform; this was an epic adventure, a quest to shape the future and empower the next generation. Join us on ITBConnect, and become a hero in this tale of progress and triumph.</p>
                 </div>
                 <Image
-                src={sampleAboutUs1}
+                src={Logo}
                 alt="Picture of the author"
                 className={`bg-no-repeat bg-contain h-auto mr-12 ${
                     windowSize > 1200 ? "w-[40%]" : ""
@@ -78,7 +80,7 @@ const AboutUs: NextPage = () => {
                 } relative`}
                 />
                 <Image
-                src={sampleAboutUs1}
+                src={FotoMindMap}
                 alt="Picture of the author"
                 className={`bg-no-repeat bg-contain h-auto ${
                     windowSize > 1200 ? "w-[40%]" : ""
@@ -106,9 +108,9 @@ The branches could also contain sub-branches or subtopics that further elaborate
                     />
                 </div>
                 <Image
-                src={sampleAboutUs1}
+                src={Logo}
                 alt="Picture of the author"
-                className={`bg-no-repeat bg-contain h-auto w-[100%] relative my-2`}
+                className={`bg-no-repeat bg-contain h-auto w-[80%] relative my-4`}
                 />
                 <p className="text-base text-secondary font-normal">In a world of endless possibilities and endless challenges, college students embarked on a quest to shape their future. They journeyed through the treacherous landscape of higher education, armed only with their passion and their determination. Along the way, they encountered many obstacles. They struggled to find the resources they needed, to connect with others who shared their interests, and to bring their ideas to life. But they refused to be defeated. And then, a glimmer of hope appeared on the horizon. ITBConnect, a powerful and revolutionary platform, arose to empower the next generation of innovators. With its Info Competition feature, students could showcase their skills and knowledge, competing with each other in a fierce yet friendly battle. And with Explore Friends, students could connect with others who shared their major and interests, forming a community of like-minded individuals who would support and inspire each other. But ITBConnect was not just a tool for connection; it was also a weapon of change. With its proposal funding feature, students could secure the resources they needed to bring their ideas to life, igniting a fire of progress and innovation that would burn bright for generations to come. This was no mere platform; this was an epic adventure, a quest to shape the future and empower the next generation. Join us on ITBConnect, and become a hero in this tale of progress and triumph.</p>
             </div>
@@ -122,7 +124,7 @@ The branches could also contain sub-branches or subtopics that further elaborate
                     />
                 </div>
                 <Image
-                src={sampleAboutUs1}
+                src={FotoMindMap}
                 alt="Picture of the author"
                 className={`bg-no-repeat bg-contain h-auto w-[100%] relative my-2`}
                 />
@@ -157,13 +159,15 @@ The branches could also contain sub-branches or subtopics that further elaborate
             <div className="mr-32">
                 <h1 className="text-blue-primary text-3xl font-bold">Contact Us</h1>
                 <p className="mt-4">ITB Connect</p>
-                <div className="flex flex-row bg-blue-primary p-2 text-center w-[100%] mt-4 justify-between rounded">
+                <div onClick={() => {
+                    window.location.href = "https://wa.me/082242340494"
+                }} className="flex flex-row bg-blue-primary p-2 text-center w-[100%] mt-4 justify-between rounded">
                     <Image
                     src={Whatsapp}
                     alt="Picture of the author"
                     className={`bg-no-repeat bg-contain h-auto w-[10%] relative`}
                     />
-                    <p className="text-white ml-2">081081081081</p>
+                    <p className="text-white ml-2">082242340494</p>
                 </div>
             </div>
             <Image
@@ -177,13 +181,15 @@ The branches could also contain sub-branches or subtopics that further elaborate
             <h1 className="text-blue-primary text-3xl font-bold">Contact Us</h1>
             <p className="mt-4">ITB Connect</p>
             <div className="flex flex-row justify-between mt-4">
-                <div className="flex flex-row bg-blue-primary p-2 text-center w-[47%] mt-4 items-center justify-center rounded">
+                <div  onClick={() => {
+                    window.location.href = "https://wa.me/082242340494"
+                }} className="flex flex-row bg-blue-primary p-2 text-center w-[47%] mt-4 items-center justify-center rounded">
                     <Image
                     src={Whatsapp}
                     alt="Picture of the author"
                     className={`bg-no-repeat bg-contain h-auto w-[10%] relative`}
                     />
-                    <p className="text-white ml-2">081081081081</p>
+                    <p className="text-white ml-2">082242340494</p>
                 </div>
                 <Image
                 src={AboutUs1}
