@@ -1,4 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
+import { addCompetition, editCompetition } from "@/api/CMSClient";
+import { uploadPhoto } from "@/api/ProfileClient";
 import request from "@/api/request";
 import AdminOrRedirect from "@/components/AdminOrRedirect";
 import { ICompetition } from "@/types/competition";
@@ -6,15 +8,20 @@ import { IEvent } from "@/types/event";
 import classNames from "classnames";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useForm } from "react-hook-form";
-import { useQuery } from "react-query";
+import { useEffect } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useMutation, useQuery } from "react-query";
 import Navbar from "../../components/navbar";
 
 type crudValues = {
-  title: string;
+  name: string;
   organizer: string;
-  datetime: string;
-  details: string;
+  organizerDescription: string;
+  date: string;
+  location: string;
+  description: string;
+  instagramURL: string;
+  url: string;
   tags: string;
   poster: FileList;
 };
@@ -41,15 +48,82 @@ const CMSCrud: NextPage = (props: any) => {
   const { data } = useQuery<IEvent | ICompetition>(
     [isCompetition ? "competition" : "event", id],
     () => (isCompetition ? getDetailComp(id) : getDetailEvent(id)),
-    { enabled: !isNew }
+    { enabled: !isNew, staleTime: Infinity }
   );
+  const uploadMutation = useMutation(uploadPhoto);
   const {
     register,
     formState: { errors },
     handleSubmit,
     watch,
+    setValue,
   } = useForm<crudValues>();
+
+  useEffect(() => {
+    setValue("name", data?.name ?? "");
+    setValue("organizer", data?.organizer ?? "");
+    setValue("organizerDescription", data?.organizerDescription ?? "");
+    setValue(
+      "date",
+      data?.date ? new Date(data.date).toISOString().slice(0, 16) : ""
+    );
+    setValue("location", data?.location ?? "");
+    setValue("description", data?.description ?? "");
+    setValue("instagramURL", data?.instagramURL ?? "");
+    setValue("url", data?.url ?? "");
+    setValue("tags", data?.competitionTags?.map((t) => t.tag).join(",") ?? "");
+  }, [data, setValue]);
   const image = watch("poster")?.item(0);
+
+  const onSubmit: SubmitHandler<crudValues> = async (v) => {
+    if (uploadMutation.isLoading) {
+      alert("Please wait for the upload to finish");
+      return;
+    }
+    const toUpload = v.poster.item(0);
+    if (isNew && !toUpload) {
+      alert("Poster is required");
+      return;
+    }
+    let imageUrl = data?.photoURLs[0]?.url ?? "";
+    if (toUpload) {
+      try {
+        const res = await uploadMutation.mutateAsync([toUpload]);
+        imageUrl = res[0];
+      } catch (err) {
+        alert("Failed to upload poster");
+        return;
+      }
+    }
+    if (isCompetition) {
+      const body = {
+        ...v,
+        poster: undefined,
+        photoURLs: [{ photoURL: imageUrl }],
+        url: v.url,
+        tags: v.tags.split(",").map((t) => ({ tag: t })),
+      };
+      if (isNew) {
+        await addCompetition(body)
+          .then(() => {
+            alert("Competition added");
+            router.push("/cms/competition");
+          })
+          .catch(() => {
+            alert("Failed to add competition");
+          });
+      } else {
+        await editCompetition(id, body)
+          .then(() => {
+            alert("Competition edited");
+            router.push("/cms/competition");
+          })
+          .catch(() => {
+            alert("Failed to edit competition");
+          });
+      }
+    }
+  };
 
   return (
     <div className="flex min-h-screen flex-col max-w-full">
@@ -59,16 +133,16 @@ const CMSCrud: NextPage = (props: any) => {
           <h1 className="text-blue-primary text-6xl font-bold">
             {isNew ? "New" : "Edit"} {isCompetition ? "Competition" : "Event"}
           </h1>
-          <form className="mt-6">
+          <form className="mt-6" onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-6">
               <label className="block mb-2 text-2xl font-bold text-black">
                 Title
               </label>
               <input
-                {...register("title")}
+                {...register("name", { required: "Title is required" })}
+                autoComplete="off"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                placeholder="Tulis deskripsi proposal di sini"
-                defaultValue={data?.name}
+                placeholder="Title"
                 required
               />
             </div>
@@ -77,10 +151,22 @@ const CMSCrud: NextPage = (props: any) => {
                 Organizer
               </label>
               <input
-                {...register("organizer")}
+                {...register("organizer", {
+                  required: "Organizer is required",
+                })}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                placeholder="Tulis deskripsi proposal di sini"
-                defaultValue={data?.organizer}
+                placeholder="Organizer"
+                required
+              />
+            </div>
+            <div className="mb-6">
+              <label className="block mb-2 text-2xl font-bold text-black">
+                Organizer Description
+              </label>
+              <textarea
+                {...register("organizerDescription")}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                placeholder="Organizer description"
                 required
               />
             </div>
@@ -89,15 +175,25 @@ const CMSCrud: NextPage = (props: any) => {
                 Date and Time
               </label>
               <input
-                {...register("datetime")}
-                type="date"
+                {...register("date", {
+                  required: "Date and time is required",
+                })}
+                type="datetime-local"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                placeholder="Tulis deskripsi proposal di sini"
-                defaultValue={
-                  data?.date
-                    ? new Date(data.date).toISOString().split("T")[0]
-                    : ""
-                }
+                required
+              />
+            </div>
+            <div className="mb-6">
+              <label className="block mb-2 text-2xl font-bold text-black">
+                Location
+              </label>
+              <input
+                {...register("location", {
+                  required: "Location is required",
+                })}
+                type="text"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                placeholder="Location"
                 required
               />
             </div>
@@ -106,10 +202,37 @@ const CMSCrud: NextPage = (props: any) => {
                 Details
               </label>
               <textarea
-                {...register("details")}
+                {...register("description")}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                placeholder="Tulis deskripsi proposal di sini"
-                defaultValue={data?.description}
+                placeholder="Details"
+                required
+              />
+            </div>
+            <div className="mb-6">
+              <label className="block mb-2 text-2xl font-bold text-black">
+                Instagram URL
+              </label>
+              <input
+                {...register("instagramURL", {
+                  required: "Instagram URL is required",
+                })}
+                type="text"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                placeholder="Instagram URL"
+                required
+              />
+            </div>
+            <div className="mb-6">
+              <label className="block mb-2 text-2xl font-bold text-black">
+                URL
+              </label>
+              <input
+                {...register("url", {
+                  required: "URL is required",
+                })}
+                type="text"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                placeholder="URL"
                 required
               />
             </div>
@@ -122,9 +245,6 @@ const CMSCrud: NextPage = (props: any) => {
                   {...register("tags")}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                   placeholder="Tulis tags di sini (pisahkan dengan koma)"
-                  defaultValue={data?.competitionTags
-                    ?.map((t) => t.tag)
-                    .join(",")}
                   required
                 />
               </div>
@@ -137,15 +257,19 @@ const CMSCrud: NextPage = (props: any) => {
                 <label
                   className={classNames(
                     "flex flex-col items-center justify-center w-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-white",
-                    !image && "h-64"
+                    !image && !data?.photoURLs[0] && "h-64"
                   )}
                   role="button"
                 >
-                  {image ? (
+                  {image || data?.photoURLs[0] ? (
                     <img
-                      className=""
+                      className="h-full"
                       alt="poster"
-                      src={URL.createObjectURL(image)}
+                      src={
+                        image
+                          ? URL.createObjectURL(image)
+                          : data?.photoURLs[0].url
+                      }
                     />
                   ) : (
                     <div className="flex flex-col items-center justify-center pt-5 pb-6">

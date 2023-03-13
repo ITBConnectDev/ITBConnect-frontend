@@ -75,7 +75,7 @@ const Register: NextPage = () => {
           alt="Picture of the author"
           className="show-items m-auto w-6/12"
         />
-        <div className="px-20 pt-20 lg:pt-32">
+        <div className="px-4 md:px-20 pt-20 lg:pt-32">
           <h1 className="text-blue-primary font-bold text-4xl">Register</h1>
           <div className="flex pt-2">
             <h5 className="text-blue-700 pr-1">Already have account? </h5>
@@ -84,7 +84,10 @@ const Register: NextPage = () => {
             </Link>
           </div>
           <div className="">
-            <form className="pt-6" onSubmit={handleSubmit(onSubmit, onError)}>
+            <form
+              className="pt-6 pb-12"
+              onSubmit={handleSubmit(onSubmit, onError)}
+            >
               <div className="mb-4">
                 <label className="block text-blue-primary text-sm font-bold mb-2">
                   Email
@@ -109,6 +112,7 @@ const Register: NextPage = () => {
                   <input
                     className="appearance-none border-2 rounded-lg w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline"
                     type="text"
+                    placeholder="Nama Lengkap"
                     {...register("fullname", {
                       required: "Nama lengkap wajib diisi.",
                       minLength: {
@@ -125,6 +129,7 @@ const Register: NextPage = () => {
                   <input
                     className="appearance-none border-2 rounded-lg w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline"
                     type="text"
+                    placeholder="Nama Panggilan"
                     {...register("nickname", {
                       required: "Nama panggilan wajib diisi.",
                       minLength: {
@@ -167,6 +172,7 @@ const Register: NextPage = () => {
                   <input
                     className="appearance-none border-2 rounded-lg w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline"
                     type="password"
+                    placeholder="Password"
                     {...register("password", {
                       required: "Password wajib diisi.",
                       minLength: {
@@ -183,6 +189,7 @@ const Register: NextPage = () => {
                   <input
                     className="appearance-none border-2 rounded-lg w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline"
                     type="password"
+                    placeholder="Confirm Password"
                     {...register("confirmPassword", {
                       validate: (value) =>
                         getValues("password") === value ||

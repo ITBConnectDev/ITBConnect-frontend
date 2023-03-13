@@ -45,15 +45,14 @@ const Login: NextPage = () => {
   };
 
   const onError = () => {
-    if(errors) {
-      if(Object.values(errors)[0] === undefined) {
-        alert("Data wajib diisi")
+    if (errors) {
+      if (Object.values(errors)[0] === undefined) {
+        alert("Data wajib diisi");
       } else {
-        alert(Object.values(errors)[0]?.message)
+        alert(Object.values(errors)[0]?.message);
       }
     }
-  }
-
+  };
 
   return (
     <div className="flex h-screen flex-row">
@@ -71,7 +70,7 @@ const Login: NextPage = () => {
           alt="Picture of the author"
           className="show-items m-auto w-6/12"
         />
-        <div className="px-20 pt-20 lg:pt-32">
+        <div className="px-4 md:px-20 pt-20 lg:pt-32">
           <h1 className="text-blue-primary font-bold text-4xl">Login</h1>
           <div className="flex pt-2">
             <h5 className="text-blue-700 pr-1">Don&apos;t have account? </h5>
@@ -80,7 +79,10 @@ const Login: NextPage = () => {
             </Link>
           </div>
           <div className="">
-            <form className="pt-6" onSubmit={handleSubmit(onSubmit, onError)}>
+            <form
+              className="pt-6 pb-12"
+              onSubmit={handleSubmit(onSubmit, onError)}
+            >
               <div className="mb-4">
                 <label className="block text-blue-primary text-sm font-bold mb-2">
                   Email
@@ -104,12 +106,13 @@ const Login: NextPage = () => {
                   className="appearance-none border-2 rounded-lg w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                   id="password"
                   type="password"
+                  placeholder="Password"
                   {...register("password", {
                     required: "Password wajib diisi.",
                   })}
                 />
               </div>
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between mb-12">
                 <button
                   className="inline-block align-baseline bg-blue-primary hover:bg-blue-700 text-white py-2 px-12 rounded focus:outline-none focus:shadow-outline border-blue-primary border-2"
                   type="submit"
@@ -117,10 +120,10 @@ const Login: NextPage = () => {
                   Login
                 </button>
               </div>
-              <div className="flex pt-8">
+              {/* <div className="flex pt-8">
                 <h5 className="text-blue-700 pr-1">Forgot your password? </h5>
                 <h5 className="text-green-primary">Reset password</h5>
-              </div>
+              </div> */}
             </form>
           </div>
         </div>

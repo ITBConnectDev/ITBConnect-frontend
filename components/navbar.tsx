@@ -83,10 +83,13 @@ function Navbar() {
               </Link>
             </li>
 
-            <li className="m-auto ml-0 bg-blue-primary p-1 rounded-full w-24 h-8 text-center text-white">
+            <li>
               {user ? (
                 <>
-                  <Link href="/profile">
+                  <Link
+                    href="/profile"
+                    className="m-auto ml-0 bg-blue-primary p-1 rounded-full w-24 py-1 text-center text-white block"
+                  >
                     <button type="button">My Profile</button>
                   </Link>
                 </>
@@ -96,11 +99,27 @@ function Navbar() {
             </li>
 
             {user ? (
-              <li className="bg-red-600 p-1 rounded-full w-24 h-8 text-center text-white">
-                <button type="button" onClick={() => logout()}>
-                  Logout
-                </button>
-              </li>
+              <>
+                {user.isAdmin && (
+                  <li className="">
+                    <Link
+                      className="bg-blue-primary p-1 rounded-full w-24 py-1 text-center text-white block"
+                      href="/cms/event"
+                    >
+                      CMS
+                    </Link>
+                  </li>
+                )}
+                <li className="">
+                  <button
+                    className="bg-red-600 p-1 rounded-full w-24 py-1 text-center text-white"
+                    type="button"
+                    onClick={() => logout()}
+                  >
+                    Logout
+                  </button>
+                </li>
+              </>
             ) : (
               ""
             )}

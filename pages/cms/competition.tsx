@@ -153,6 +153,7 @@ const CMSCompetition: NextPage = () => {
                             ) {
                               deleteCompetition(c.id).then(() => {
                                 refetch();
+                                alert("Competition deleted");
                               });
                             }
                           }}
