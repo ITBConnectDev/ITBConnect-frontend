@@ -90,11 +90,16 @@ function Navbar() {
                     href="/profile"
                     className="m-auto ml-0 bg-blue-primary p-1 rounded-full w-24 py-1 text-center text-white block"
                   >
-                    <button type="button">My Profile</button>
+                    My Profile
                   </Link>
                 </>
               ) : (
-                <Link href="/login">Login</Link>
+                <Link
+                  href="/login"
+                  className="m-auto ml-0 bg-blue-primary p-1 rounded-full w-24 py-1 text-center text-white block"
+                >
+                  Login
+                </Link>
               )}
             </li>
 

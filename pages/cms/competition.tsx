@@ -1,20 +1,20 @@
 import { deleteCompetition } from "@/api/CMSClient";
 import request from "@/api/request";
 import AdminOrRedirect from "@/components/AdminOrRedirect";
+import Pagination from "@/components/pagination";
 import type { NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useQuery } from "react-query";
 import Navbar from "../../components/navbar";
 import { useWindowSize } from "../../utils/windowsize";
 
 const CMSCompetition: NextPage = () => {
   const router = useRouter();
-  const [windowSize, setWindowSize] = useState(0);
   const size = useWindowSize();
   const [page, setPage] = useState(1);
-  const getDataNews = async (hal) => {
+  const getDataComps = async (hal) => {
     const data = await request("/competition/?page=" + hal);
     return data;
   };
@@ -22,13 +22,9 @@ const CMSCompetition: NextPage = () => {
   // Using the hook
   const { data, error, refetch } = useQuery({
     queryKey: ["competitions", page],
-    queryFn: () => getDataNews(page),
+    queryFn: () => getDataComps(page),
     keepPreviousData: true,
   });
-
-  useEffect(() => {
-    setWindowSize(size.width);
-  }, [size.width]);
 
   const newData = () => {
     router.push({
@@ -80,6 +76,13 @@ const CMSCompetition: NextPage = () => {
           </div>
 
           <div className="relative overflow-x-auto shadow-md mt-4">
+            {data && (
+              <Pagination
+                page={page}
+                pageTotal={data.pageTotal}
+                setPage={setPage}
+              />
+            )}
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 overflow-x-hidden">
               <thead className="text-xs text-gray-700 uppercase bg-gray-300">
                 <tr>
@@ -137,7 +140,7 @@ const CMSCompetition: NextPage = () => {
                           {new Date(c.date).toLocaleDateString()}
                         </td>
                         <td className="px-6 py-4">{c.location}</td>
-                        <td className="px-6 py-4">{c.instagramURL}</td>
+                        <td className="px-6 py-4">{c.url}</td>
                         <td onClick={() => editData(c.id)} role="button">
                           <div className="m-auto bg-white border-2 border-blue-primary p-1.5 rounded-full w-24 text-center text-blue-primary">
                             Edit
@@ -167,6 +170,13 @@ const CMSCompetition: NextPage = () => {
                   })}
               </tbody>
             </table>
+            {data && (
+              <Pagination
+                page={page}
+                pageTotal={data.pageTotal}
+                setPage={setPage}
+              />
+            )}
           </div>
         </div>
       </AdminOrRedirect>

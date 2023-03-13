@@ -11,3 +11,15 @@ export function addCompetition(competition: any) {
 export function editCompetition(id: number, competition: any) {
   return request("/competition/" + id, "PUT", competition);
 }
+
+export function deleteEvent(id: number) {
+  return request("/news/" + id, "DELETE");
+}
+
+export function addEvent(event: any) {
+  return request("/news", "POST", event);
+}
+
+export function editEvent(id: number, event: any) {
+  return request("/news/" + id, "PUT", event);
+}

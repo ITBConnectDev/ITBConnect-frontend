@@ -1,5 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
-import { addCompetition, editCompetition } from "@/api/CMSClient";
+import {
+  addCompetition,
+  addEvent,
+  editCompetition,
+  editEvent,
+} from "@/api/CMSClient";
 import { uploadPhoto } from "@/api/ProfileClient";
 import request from "@/api/request";
 import AdminOrRedirect from "@/components/AdminOrRedirect";
@@ -53,18 +58,14 @@ const CMSCrud: NextPage = (props: any) => {
   const [photo, setPhoto] = useState<File | null>(null);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: useCallback((acceptedFiles: File[]) => {
+      setLastImageURL(null);
       setPhoto(acceptedFiles[0]);
     }, []),
   });
 
   const uploadMutation = useMutation(uploadPhoto);
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-    watch,
-    setValue,
-  } = useForm<crudValues>();
+  const { register, handleSubmit, setValue } = useForm<crudValues>();
+  const [lastImageURL, setLastImageURL] = useState<string | null>(null);
 
   useEffect(() => {
     setValue("name", data?.name ?? "");
@@ -91,24 +92,26 @@ const CMSCrud: NextPage = (props: any) => {
       alert("Poster is required");
       return;
     }
-    let imageUrl = data?.photoURLs[0]?.url ?? "";
-    if (toUpload) {
+    let imageUrl = data?.photoURLs[0]?.url ?? lastImageURL ?? "";
+    if (toUpload && !lastImageURL) {
       try {
         const res = await uploadMutation.mutateAsync([toUpload]);
         imageUrl = res[0];
+        setLastImageURL(imageUrl);
       } catch (err) {
         alert("Failed to upload poster");
         return;
       }
     }
+    const body: any = {
+      ...v,
+      poster: undefined,
+      photoURLs: [{ photoURL: imageUrl }],
+      url: v.url,
+      tags: [],
+    };
     if (isCompetition) {
-      const body = {
-        ...v,
-        poster: undefined,
-        photoURLs: [{ photoURL: imageUrl }],
-        url: v.url,
-        tags: v.tags.split(",").map((t) => ({ tag: t })),
-      };
+      body.tags = v.tags.split(",").map((t) => ({ tag: t }));
       if (isNew) {
         await addCompetition(body)
           .then(() => {
@@ -126,6 +129,26 @@ const CMSCrud: NextPage = (props: any) => {
           })
           .catch(() => {
             alert("Failed to edit competition");
+          });
+      }
+    } else {
+      if (isNew) {
+        await addEvent(body)
+          .then(() => {
+            alert("Event added");
+            router.push("/cms/event");
+          })
+          .catch(() => {
+            alert("Failed to add event");
+          });
+      } else {
+        await editEvent(id, body)
+          .then(() => {
+            alert("Event edited");
+            router.push("/cms/event");
+          })
+          .catch(() => {
+            alert("Failed to edit event");
           });
       }
     }
@@ -222,7 +245,7 @@ const CMSCrud: NextPage = (props: any) => {
                 {...register("instagramURL", {
                   required: "Instagram URL is required",
                 })}
-                type="text"
+                type="url"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 placeholder="Instagram URL"
                 required
@@ -236,7 +259,7 @@ const CMSCrud: NextPage = (props: any) => {
                 {...register("url", {
                   required: "URL is required",
                 })}
-                type="text"
+                type="url"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 placeholder="URL"
                 required
