@@ -284,10 +284,10 @@ const Profile: NextPage<{ user?: IProfileUser }> = ({ user: initialUser }) => {
           </form>
           <div className="w-full mb-8">
             <div className="grid lg:grid-cols-2 w-full gap-x-10 gap-y-5 items-stretch">
-              <Achievements />
+              <Achievements userId={userAuth?.id} editable />
               <div className={`h-full flex flex-col gap-5`}>
-                <Interests interests={user.userInterests} />
-                <Languages languages={user.userLanguages} />
+                <Interests interests={user.userInterests} editable />
+                <Languages languages={user.userLanguages} editable />
               </div>
             </div>
           </div>

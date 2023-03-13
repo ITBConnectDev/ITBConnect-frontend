@@ -6,7 +6,6 @@ import {
 import AddIcon from "@/assets/AddIcon.svg";
 import EditTextIcon from "@/assets/EditTextIcon.svg";
 import useAchievements from "@/hooks/useAchievements";
-import useAuth from "@/hooks/useAuth";
 import { IAchievement } from "@/types/profile";
 import classNames from "classnames";
 import Image from "next/image";
@@ -16,10 +15,15 @@ import { useQueryClient } from "react-query";
 import Modal from "../modal";
 import Pagination from "../pagination";
 
-export default function Achievements() {
-  const { user } = useAuth();
+export default function Achievements({
+  userId,
+  editable,
+}: {
+  userId?: number;
+  editable?: boolean;
+}) {
   const [page, setPage] = useState(1);
-  const { data } = useAchievements(user?.id, page);
+  const { data } = useAchievements(userId, page);
 
   useEffect(() => {
     if (data && data.pageTotal < page) {
@@ -33,14 +37,18 @@ export default function Achievements() {
     >
       <div className="">
         <div className="flex flex-row justify-between mb-5">
-          <h2 className="text-green-primary text-xl md:text-2xl">
+          <h3 className="text-green-primary text-xl md:text-2xl">
             Achievement
-          </h2>
-          <AddEditButton />
+          </h3>
+          {editable && <AddEditButton />}
         </div>
         <ul className="flex flex-col gap-2.5">
           {data?.achievements.map((achievement) => (
-            <Achievement key={achievement.id} achievement={achievement} />
+            <Achievement
+              key={achievement.id}
+              achievement={achievement}
+              editable={editable}
+            />
           ))}
         </ul>
       </div>
@@ -56,12 +64,18 @@ export default function Achievements() {
   );
 }
 
-function Achievement({ achievement }: { achievement: IAchievement }) {
+function Achievement({
+  achievement,
+  editable,
+}: {
+  achievement: IAchievement;
+  editable?: boolean;
+}) {
   return (
     <li>
       <div className="flex flex-row justify-between">
         <h4 className="text-xl">{achievement.achievement}</h4>
-        <AddEditButton achievement={achievement} />
+        {editable && <AddEditButton achievement={achievement} />}
       </div>
       <p className="text-gray-500 my-1">
         Issued by {achievement.issuer} .{" "}
