@@ -41,7 +41,7 @@ const ListCompetition: NextPage = () => {
           className={`bg-no-repeat bg-contain h-auto "lg:w-[8%] w-[10%]" relative`}
         />
         <h1
-          className={`text-center text-8xl text-green-primary font-bold mt-[3%] lg:mx-0 mx-auto font-rubik`}
+          className={`text-center text-2xl md:text-8xl text-green-primary font-bold mt-[3%] lg:mx-0 mx-auto font-rubik`}
         >
           Competitions
         </h1>
@@ -52,17 +52,7 @@ const ListCompetition: NextPage = () => {
         />
       </div>
       <p className={`text-center mt-8 text-secondary lg:mx-64 mx-7`}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas mollis
-        convallis risus, eu porta est sodales ac. In quis diam in sem auctor
-        pharetra. Nunc scelerisque massa quam, eget sollicitudin quam venenatis
-        quis. Etiam at ultricies mauris. Donec vel varius felis. Fusce id
-        sollicitudin urna, in ullamcorper tortor. Nulla gravida orci vitae
-        gravida aliquam. In semper ornare purus, sed viverra dui dictum eu. Sed
-        gravida mi nibh, quis rhoncus enim varius id. Etiam vitae sollicitudin
-        odio. Integer pulvinar nunc consectetur molestie vehicula. Cras
-        dignissim ac erat non ultrices. Orci varius natoque penatibus et magnis
-        dis parturient montes, nascetur ridiculus mus. Proin mi ligula, pharetra
-        non arcu ac, laoreet viverra turpis. Cras posuere tincidunt volutpat.
+      With its Info Competition feature, students have the opportunity to showcase their skills and knowledge, competing against each other in a friendly and supportive environment.
       </p>
       <form className={`mt-8 flex flex-row lg:mx-56 mx-7`}>
         <div className="relative w-full">
@@ -99,7 +89,7 @@ const ListCompetition: NextPage = () => {
         </button>
       </form>
 
-      <div className={`grid grid-cols-4 gap-2 mt-12 mb-9 lg:mx-36 mx-7`}>
+      <div className={`grid grid-cols-2 md:grid-cols-4 gap-2 mt-12 mb-9 lg:mx-36 mx-7`}>
         {data &&
           data.competitions.map((d, i) => {
             return (
@@ -122,7 +112,7 @@ const ListCompetition: NextPage = () => {
       <nav aria-label="Page navigation example" className="m-auto mb-8">
         <ul className="inline-flex items-center -space-x-px">
           <li onClick={() => setPage(Math.max(page - 1, 0))}>
-            <a className="block px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+            <a className="block px-3 py-2 ml-0 leading-tight rounded-l-lg bg-white text-green-500 hover:bg-green-500 hover:text-white">
               <span className="sr-only">Previous</span>
               <svg
                 aria-hidden="true"
@@ -143,14 +133,14 @@ const ListCompetition: NextPage = () => {
             Array.from(Array(data.pageTotal), (e, i) => {
               return (
                 <li key={i} onClick={() => setPage(Math.max(i + 1, 0))}>
-                  <a className="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                  <a className={`px-3 py-2 leading-tight hover:bg-green-500 hover:text-white rounded ${i + 1 === page ? "bg-green-500 text-white" : "bg-white text-green-500"}`}>
                     {i + 1}
                   </a>
                 </li>
               );
             })}
           <li onClick={() => setPage(Math.min(page + 1, data.pageTotal))}>
-            <a className="block px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+            <a className="block px-3 py-2 leading-tight rounded-r-lg bg-white text-green-500 hover:bg-green-500 hover:text-white">
               <span className="sr-only">Next</span>
               <svg
                 aria-hidden="true"

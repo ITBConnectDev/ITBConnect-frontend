@@ -55,7 +55,7 @@ const ListNews: NextPage = () => {
           className={`bg-no-repeat bg-contain h-auto lg:w-[10%] w-[8%] relative`}
         />
         <h1
-          className={`text-center lg:text-8xl text-6xl text-green-primary font-bold mt-[3%] lg:mx-0 mx-auto`}
+          className={`text-center lg:text-8xl text-2xl text-green-primary font-bold mt-[3%] lg:mx-0 mx-auto`}
         >
           Event News
         </h1>
@@ -65,19 +65,6 @@ const ListNews: NextPage = () => {
           className={`bg-no-repeat bg-contain h-auto lg:w-[10%] w-[8%] relative`}
         />
       </div>
-      <p className={`text-center mt-8 text-secondary lg:mx-64 mx-7`}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas mollis
-        convallis risus, eu porta est sodales ac. In quis diam in sem auctor
-        pharetra. Nunc scelerisque massa quam, eget sollicitudin quam venenatis
-        quis. Etiam at ultricies mauris. Donec vel varius felis. Fusce id
-        sollicitudin urna, in ullamcorper tortor. Nulla gravida orci vitae
-        gravida aliquam. In semper ornare purus, sed viverra dui dictum eu. Sed
-        gravida mi nibh, quis rhoncus enim varius id. Etiam vitae sollicitudin
-        odio. Integer pulvinar nunc consectetur molestie vehicula. Cras
-        dignissim ac erat non ultrices. Orci varius natoque penatibus et magnis
-        dis parturient montes, nascetur ridiculus mus. Proin mi ligula, pharetra
-        non arcu ac, laoreet viverra turpis. Cras posuere tincidunt volutpat.
-      </p>
       <form className={`mt-8 flex flex-row lg:mx-56 mx-7`}>
         <div className="relative w-full">
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -138,7 +125,7 @@ const ListNews: NextPage = () => {
           <li onClick={() => setPage(Math.max(page - 1, 0))}>
             <a
               href="#"
-              className="block px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+              className="block px-3 py-2 ml-0 leading-tight rounded-l-lg bg-white text-green-500 hover:bg-green-500 hover:text-white"
             >
               <span className="sr-only">Previous</span>
               <svg
@@ -162,7 +149,7 @@ const ListNews: NextPage = () => {
                 <li key={i}>
                   <a
                     href="#"
-                    className="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                    className={`px-3 py-2 leading-tight hover:bg-green-500 hover:text-white rounded ${i + 1 === page ? "bg-green-500 text-white" : "bg-white text-green-500"}`}
                   >
                     {i + 1}
                   </a>
@@ -170,7 +157,7 @@ const ListNews: NextPage = () => {
               );
             })}
           <li onClick={() => setPage(Math.min(page + 1, data.pageTotal))}>
-            <a className="block px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+            <a className="block px-3 py-2 leading-tight rounded-r-lg bg-white text-green-500 hover:bg-green-500 hover:text-white">
               <span className="sr-only">Next</span>
               <svg
                 aria-hidden="true"

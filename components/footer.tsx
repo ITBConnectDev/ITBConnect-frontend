@@ -14,6 +14,7 @@ class Footer extends Component {
         <div className="flex justify-between mb-4">
           <div>
             <Image
+              onClick={() => window.location.href = "itb-connect.com"}
               src={IconWhite}
               alt="Picture of the author"
               className="h-full bg-no-repeat bg-contain w-[7rem] md:w-[10rem]"
@@ -21,26 +22,31 @@ class Footer extends Component {
           </div>
           <div className="flex">
             <Image
+              onClick={() => window.location.href = "itb-connect.com"}
               src={Instagram}
               alt="Picture of the author"
               className="h-full bg-no-repeat bg-contain w-[3rem]"
             />
             <Image
+              onClick={() => window.location.href = "itb-connect.com"}
               src={Linkedin}
               alt="Picture of the author"
               className="h-full bg-no-repeat bg-contain w-[3rem]"
             />
             <Image
+              onClick={() => window.location.href = "itb-connect.com"}
               src={Twitter}
               alt="Picture of the author"
               className="h-full bg-no-repeat bg-contain w-[3rem]"
             />
             <Image
+              onClick={() => window.location.href = "itb-connect.com"}
               src={Line}
               alt="Picture of the author"
               className="h-full bg-no-repeat bg-contain w-[3rem]"
             />
             <Image
+              onClick={() => window.location.href = "itb-connect.com"}
               src={Youtube}
               alt="Picture of the author"
               className="h-full bg-no-repeat bg-contain w-[3rem]"
@@ -49,12 +55,12 @@ class Footer extends Component {
         </div>
         <div className="flex justify-between">
           <div>
-            <h1 className="text-white">Kementrian xxxxxxxx</h1>
-            <h1 className="text-white">Kemenkoan xxxx</h1>
-            <h1 className="text-white">Kabinet xxxxxx</h1>
+            <h1 className="text-white">Kementrian Kolaborasi dan Inovasi</h1>
+            <h1 className="text-white">Kemenkoan Karya dan Inovasi</h1>
+            <h1 className="text-white">Kabinet Cita Raya</h1>
           </div>
           <div>
-            <div className="text-white">© 2022 xxxxxxxxx</div>
+            <div className="text-white">© 2022 ITBConnect</div>
           </div>
         </div>
       </div>

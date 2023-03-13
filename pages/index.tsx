@@ -6,15 +6,20 @@ import { useEffect, useState } from "react";
 import Index1 from "../assets/Index1.svg";
 import Jumbotron1 from "../assets/Jumbotron1.svg";
 import Jumbotron2 from "../assets/Jumbotron2.svg";
+import FotoCompetition from "../assets/foto_competition.svg"
+import FotoFindFriend from "../assets/foto_find_friends.svg"
 import Logo from "../assets/Logo.svg";
 import TempImage1 from "../assets/temp_pict_1.svg";
 import Footer from "../components/footer";
 import Navbar from "../components/navbar";
 import { useWindowSize } from "../utils/windowsize";
+import useAuth from "@/hooks/useAuth";
+import Link from "next/link";
 
 const Home: NextPage = () => {
   const [windowSize, setWindowSize] = useState(0);
   const size = useWindowSize();
+  const { user } = useAuth();
 
   useEffect(() => {
     setWindowSize(size.width);
@@ -23,8 +28,7 @@ const Home: NextPage = () => {
   return (
     <div className="flex min-h-screen flex-col">
       <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>ITBConnect</title>
         <link
           rel="stylesheet"
           href="https://unpkg.com/flowbite@1.5.5/dist/flowbite.min.css"
@@ -59,9 +63,13 @@ const Home: NextPage = () => {
                 Visioned to remove limitations between groups, encourage and
                 amplify collaborations and innovations through out ITB
               </h1>
-              <div className="m-auto bg-blue-primary p-1 rounded-full w-24 h-8 text-center text-white mt-6">
-                Login
-              </div>
+              {user ? (
+                ""
+              ) : (
+                <div className="m-auto bg-blue-primary p-1 rounded-full w-24 h-8 text-center text-white mt-6">
+                  <Link href="/login">Login</Link>
+                </div>
+              )}
             </div>
             <Image
               src={Jumbotron2}
@@ -87,7 +95,7 @@ const Home: NextPage = () => {
                   }`}
                 >
                   <Image
-                    src={TempImage1}
+                    src={FotoCompetition}
                     alt="Picture of the author"
                     className={`bg-no-repeat bg-contain h-auto ${
                       windowSize > 1200 ? "w-[88%]" : "w-[50%]"
@@ -120,6 +128,9 @@ const Home: NextPage = () => {
                     className={`${
                       windowSize > 1200 ? "" : "mx-auto"
                     } bg-blue-primary p-1 rounded-lg w-max text-center text-white mt-6 py-3 px-12`}
+                    onClick={() => {
+                      window.location.href = "/competitions"
+                  }}
                   >
                     LEARN MORE
                   </div>
@@ -134,7 +145,7 @@ const Home: NextPage = () => {
                   }`}
                 >
                   <Image
-                    src={TempImage1}
+                    src={FotoFindFriend}
                     alt="Picture of the author"
                     className={`bg-no-repeat bg-contain h-auto ${
                       windowSize > 1200 ? "w-[88%]" : "w-[50%]"
@@ -167,6 +178,9 @@ const Home: NextPage = () => {
                     className={`${
                       windowSize > 1200 ? "" : "mx-auto"
                     } bg-blue-primary p-1 rounded-lg w-max text-center text-white mt-6 py-3 px-12`}
+                    onClick={() => {
+                      window.location.href = "/explore"
+                  }}
                   >
                     LEARN MORE
                   </div>
