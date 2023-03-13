@@ -9,19 +9,19 @@ export default function Languages({
   languages: IProfileUser["userLanguages"];
 }) {
   return (
-    <div className="bg-white rounded-lg drop-shadow-2xl p-8 w-[100%] border-2 mb-5">
+    <div className="bg-white rounded-lg drop-shadow-2xl p-8 w-[100%] border-2">
       <div className="flex flex-row justify-between mb-5">
-        <h1 className="text-green-primary text-3xl">Fluent In</h1>
+        <h1 className="text-green-primary text-xl md:text-2xl">Fluent In</h1>
         <div className="flex flex-row mr-4">
           <Image
             src={AddIcon}
             alt="Picture of the author"
-            className="bg-no-repeat bg-contain bg-left h-100 w-[60%]"
+            className="bg-no-repeat bg-contain bg-left aspect-square w-4 md:w-6"
           />
           <Image
             src={EditTextIcon}
             alt="Picture of the author"
-            className="bg-no-repeat bg-contain bg-left h-100 w-[60%] ml-4"
+            className="bg-no-repeat bg-contain bg-left aspect-square w-4 md:w-6 ml-4"
           />
         </div>
       </div>

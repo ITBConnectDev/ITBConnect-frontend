@@ -8,95 +8,50 @@ import EditTextIcon from "@/assets/EditTextIcon.svg";
 import useAchievements from "@/hooks/useAchievements";
 import useAuth from "@/hooks/useAuth";
 import { IAchievement } from "@/types/profile";
-import { useWindowSize } from "@/utils/windowsize";
 import classNames from "classnames";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
 import Modal from "../modal";
+import Pagination from "../pagination";
 
 export default function Achievements() {
-  const size = useWindowSize();
   const { user } = useAuth();
-  const windowSize = size.width;
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const { data } = useAchievements(user?.id, page);
+
+  useEffect(() => {
+    if (data && data.pageTotal < page) {
+      setPage(data.pageTotal);
+    }
+  }, [data, page]);
 
   return (
     <div
-      className={`bg-white rounded-lg drop-shadow-2xl p-8 h-fit border-2 ${
-        windowSize <= 1200 ? "mx-auto w-[80%] mb-5" : "w-[38%]"
-      }`}
+      className={`bg-white rounded-lg drop-shadow-2xl p-8 h-full border-2 flex flex-col justify-between`}
     >
-      <div className="flex flex-row justify-between mb-5">
-        <h2 className="text-green-primary text-3xl">Achievement</h2>
-        <AddEditButton />
-      </div>
-      <ul>
-        {data?.achievements.map((achievement) => (
-          <Achievement key={achievement.id} achievement={achievement} />
-        ))}
-      </ul>
-      <nav aria-label="Page navigation example" className="m-auto mb-8">
-        <ul className="inline-flex items-center -space-x-px">
-          <li
-            role="button"
-            onClick={() => setPage(Math.max(page - 1, 0))}
-            className="block px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-          >
-            <span className="sr-only">Previous</span>
-            <svg
-              aria-hidden="true"
-              className="w-5 h-5"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fillRule="evenodd"
-                d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                clipRule="evenodd"
-              ></path>
-            </svg>
-          </li>
-          {data &&
-            Array.from(Array(data.pageTotal), (e, i) => {
-              return (
-                <li
-                  role="button"
-                  key={i}
-                  onClick={() => setPage(Math.max(i + 1, 0))}
-                  className="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                >
-                  {i + 1}
-                </li>
-              );
-            })}
-          <li
-            role="button"
-            onClick={() =>
-              setPage(Math.min(page + 1, data?.pageTotal ?? page + 1))
-            }
-            className="block px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-          >
-            <span className="sr-only">Next</span>
-            <svg
-              aria-hidden="true"
-              className="w-5 h-5"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fillRule="evenodd"
-                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                clipRule="evenodd"
-              ></path>
-            </svg>
-          </li>
+      <div className="">
+        <div className="flex flex-row justify-between mb-5">
+          <h2 className="text-green-primary text-xl md:text-2xl">
+            Achievement
+          </h2>
+          <AddEditButton />
+        </div>
+        <ul className="flex flex-col gap-2.5">
+          {data?.achievements.map((achievement) => (
+            <Achievement key={achievement.id} achievement={achievement} />
+          ))}
         </ul>
-      </nav>
+      </div>
+      {data && (
+        <Pagination
+          page={page}
+          setPage={setPage}
+          pageTotal={data.pageTotal}
+          className="mt-4"
+        />
+      )}
     </div>
   );
 }
@@ -149,7 +104,7 @@ function AddEditButton({ achievement }: { achievement?: IAchievement }) {
   const isEdit = !!achievement;
   const now = new Date();
 
-  const { register, handleSubmit } = useForm<FormState>({
+  const { register, handleSubmit, reset } = useForm<FormState>({
     defaultValues: {
       achievement: achievement?.achievement ?? "",
       issuer: achievement?.issuer ?? "",
@@ -177,7 +132,7 @@ function AddEditButton({ achievement }: { achievement?: IAchievement }) {
             alt="Picture of the author"
             width={24}
             height={24}
-            className="bg-no-repeat bg-contain bg-left"
+            className="bg-no-repeat bg-contain bg-left aspect-square w-4 md:w-6"
           />
         ) : (
           <Image
@@ -185,7 +140,7 @@ function AddEditButton({ achievement }: { achievement?: IAchievement }) {
             alt="Picture of the author"
             width={24}
             height={24}
-            className="bg-no-repeat bg-contain bg-left"
+            className="bg-no-repeat bg-contain bg-left aspect-square w-4 md:w-6"
           />
         )}
       </button>
@@ -213,6 +168,9 @@ function AddEditButton({ achievement }: { achievement?: IAchievement }) {
             }
             promise
               .then(() => {
+                if (!isEdit) {
+                  reset();
+                }
                 setIsOpen(false);
                 queryClient.invalidateQueries("achievements");
                 alert(
@@ -238,6 +196,7 @@ function AddEditButton({ achievement }: { achievement?: IAchievement }) {
               className="appearance-none border-2 rounded-lg w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline"
               {...register("achievement")}
               type="text"
+              placeholder="Achievement"
             />
           </div>
           <div className="w-full mb-1 md:mb-0">
@@ -247,6 +206,7 @@ function AddEditButton({ achievement }: { achievement?: IAchievement }) {
             <input
               className="appearance-none border-2 rounded-lg w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline"
               {...register("issuer")}
+              placeholder="Penerbit"
               type="text"
             />
           </div>
@@ -287,6 +247,7 @@ function AddEditButton({ achievement }: { achievement?: IAchievement }) {
             <textarea
               className="appearance-none border-2 rounded-lg w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline"
               {...register("description")}
+              placeholder="Deskripsi"
             />
           </div>
           <div
