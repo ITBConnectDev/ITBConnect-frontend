@@ -12,4 +12,5 @@ export interface IEvent {
     url: string;
   }[];
   instagramURL: string;
+  competitionTags: undefined;
 }

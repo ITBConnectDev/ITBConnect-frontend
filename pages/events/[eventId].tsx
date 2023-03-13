@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import { useQuery } from "react-query";
 
 async function getDetail(id: string) {
-  return await await request<IEvent>("/news/" + id);
+  return await request<IEvent>("/news/" + id);
 }
 
 function EventPage() {
