@@ -1,6 +1,7 @@
 import { Lexend, Rubik } from "@next/font/google";
 import type { AppProps } from "next/app";
 import Head from "next/head";
+import Script from "next/script";
 import { QueryClient, QueryClientProvider } from "react-query";
 import "../styles/globals.css";
 
@@ -20,7 +21,6 @@ const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    
     <main className={`${rubik.variable} ${lexend.variable} font-lexend`}>
       <Head>
         <title>ITBConnect</title>
@@ -32,6 +32,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <QueryClientProvider client={queryClient}>
         <Component {...pageProps} />
       </QueryClientProvider>
+      <Script src="https://unpkg.com/flowbite@1.5.5/dist/flowbite.js"></Script>
     </main>
   );
 }
