@@ -19,7 +19,7 @@ const CMSEvent: NextPage = () => {
   };
 
   const { data, error, refetch } = useQuery({
-    queryKey: ["competitions", page],
+    queryKey: ["news", page],
     queryFn: () => getDataNews(page),
     keepPreviousData: true,
   });

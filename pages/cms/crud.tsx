@@ -16,7 +16,7 @@ import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import Navbar from "../../components/navbar";
 
 type crudValues = {
@@ -47,6 +47,7 @@ async function getDetailEvent(id: number) {
 
 const CMSCrud: NextPage = (props: any) => {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const isNew = props.isNew === "true";
   const isCompetition = props.isCompetitions === "true";
   const id = parseInt(props.id);
@@ -115,6 +116,7 @@ const CMSCrud: NextPage = (props: any) => {
       if (isNew) {
         await addCompetition(body)
           .then(() => {
+            queryClient.invalidateQueries("competitions");
             alert("Competition added");
             router.push("/cms/competition");
           })
@@ -124,6 +126,7 @@ const CMSCrud: NextPage = (props: any) => {
       } else {
         await editCompetition(id, body)
           .then(() => {
+            queryClient.invalidateQueries("competitions");
             alert("Competition edited");
             router.push("/cms/competition");
           })
@@ -135,6 +138,7 @@ const CMSCrud: NextPage = (props: any) => {
       if (isNew) {
         await addEvent(body)
           .then(() => {
+            queryClient.invalidateQueries("news");
             alert("Event added");
             router.push("/cms/event");
           })
@@ -144,6 +148,7 @@ const CMSCrud: NextPage = (props: any) => {
       } else {
         await editEvent(id, body)
           .then(() => {
+            queryClient.invalidateQueries("news");
             alert("Event edited");
             router.push("/cms/event");
           })
