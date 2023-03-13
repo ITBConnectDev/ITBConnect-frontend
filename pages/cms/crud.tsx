@@ -8,7 +8,8 @@ import { IEvent } from "@/types/event";
 import classNames from "classnames";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useDropzone } from "react-dropzone";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutation, useQuery } from "react-query";
 import Navbar from "../../components/navbar";
@@ -23,7 +24,6 @@ type crudValues = {
   instagramURL: string;
   url: string;
   tags: string;
-  poster: FileList;
 };
 
 export function getServerSideProps(ctx) {
@@ -50,6 +50,13 @@ const CMSCrud: NextPage = (props: any) => {
     () => (isCompetition ? getDetailComp(id) : getDetailEvent(id)),
     { enabled: !isNew, staleTime: Infinity }
   );
+  const [photo, setPhoto] = useState<File | null>(null);
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop: useCallback((acceptedFiles: File[]) => {
+      setPhoto(acceptedFiles[0]);
+    }, []),
+  });
+
   const uploadMutation = useMutation(uploadPhoto);
   const {
     register,
@@ -73,14 +80,13 @@ const CMSCrud: NextPage = (props: any) => {
     setValue("url", data?.url ?? "");
     setValue("tags", data?.competitionTags?.map((t) => t.tag).join(",") ?? "");
   }, [data, setValue]);
-  const image = watch("poster")?.item(0);
 
   const onSubmit: SubmitHandler<crudValues> = async (v) => {
     if (uploadMutation.isLoading) {
       alert("Please wait for the upload to finish");
       return;
     }
-    const toUpload = v.poster.item(0);
+    const toUpload = photo;
     if (isNew && !toUpload) {
       alert("Poster is required");
       return;
@@ -253,21 +259,27 @@ const CMSCrud: NextPage = (props: any) => {
               <label className="block mb-2 text-2xl font-bold text-black">
                 Poster
               </label>
-              <div className="flex items-center justify-center w-full">
+              <div
+                className={classNames(
+                  "flex items-center justify-center w-full",
+                  isDragActive && "opacity-50"
+                )}
+                {...getRootProps()}
+              >
                 <label
                   className={classNames(
                     "flex flex-col items-center justify-center w-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-white",
-                    !image && !data?.photoURLs[0] && "h-64"
+                    !photo && !data?.photoURLs[0] && "h-64"
                   )}
                   role="button"
                 >
-                  {image || data?.photoURLs[0] ? (
+                  {photo || data?.photoURLs[0] ? (
                     <img
                       className="h-full"
                       alt="poster"
                       src={
-                        image
-                          ? URL.createObjectURL(image)
+                        photo
+                          ? URL.createObjectURL(photo)
                           : data?.photoURLs[0].url
                       }
                     />
@@ -298,7 +310,7 @@ const CMSCrud: NextPage = (props: any) => {
                     </div>
                   )}
                   <input
-                    {...register("poster")}
+                    {...getInputProps()}
                     id="dropzone-file"
                     type="file"
                     accept="image/*"
