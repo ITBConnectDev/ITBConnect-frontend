@@ -118,7 +118,7 @@ const FriendDetailPage: NextPage = () => {
               }`}
             >
               <Image
-                src={sampleOrang}
+                src={data?.photo?.url || sampleOrang}
                 alt="Picture of the author"
                 className="bg-no-repeat bg-contain bg-left h-100 w-[87%] rounded-full"
               />
