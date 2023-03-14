@@ -1,13 +1,13 @@
 import { addUserLanguage, deleteUserLanguage } from "@/api/ProfileClient";
 import AddIcon from "@/assets/AddIcon.svg";
+import CloseIcon from "@/assets/Close.svg";
 import EditTextIcon from "@/assets/EditTextIcon.svg";
 import { IProfileUser } from "@/types/profile";
+import classNames from "classnames";
 import Image from "next/image";
-import CloseIcon from "@/assets/Close.svg";
-import { useQueryClient } from "react-query";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import classNames from "classnames";
+import { useQueryClient } from "react-query";
 import Modal from "../modal";
 
 export default function Languages({
@@ -66,6 +66,7 @@ function AddEditButton({
 }: {
   languages?: IProfileUser["userLanguages"];
 }) {
+  const queryClient = useQueryClient();
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isAddOpen, setIsAddOpen] = useState(false);
   const { register, handleSubmit, reset } = useForm<FormState>({
@@ -112,6 +113,7 @@ function AddEditButton({
           onSubmit={handleSubmit(async ({ ...data }) => {
             let promise = addUserLanguage(data)
               .then(() => {
+                queryClient.invalidateQueries("profile");
                 setIsAddOpen(false);
                 reset();
                 alert("Language berhasil ditambahkan");

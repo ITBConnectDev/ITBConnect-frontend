@@ -1,7 +1,7 @@
 import { addUserSkill, deleteUserSkill } from "@/api/ProfileClient";
 import AddIcon from "@/assets/AddIcon.svg";
-import EditTextIcon from "@/assets/EditTextIcon.svg";
 import CloseIcon from "@/assets/Close.svg";
+import EditTextIcon from "@/assets/EditTextIcon.svg";
 import { IProfileUser } from "@/types/profile";
 import classNames from "classnames";
 import Image from "next/image";
@@ -67,8 +67,10 @@ function AddEditButton({
 }: {
   interests?: IProfileUser["userInterests"];
 }) {
+  const queryClient = useQueryClient();
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isAddOpen, setIsAddOpen] = useState(false);
+
   const { register, handleSubmit, reset } = useForm<FormState>({
     defaultValues: {
       skills: "",
@@ -113,6 +115,7 @@ function AddEditButton({
           onSubmit={handleSubmit(async ({ ...data }) => {
             let promise = addUserSkill(data)
               .then(() => {
+                queryClient.invalidateQueries("profile");
                 setIsAddOpen(false);
                 reset();
                 alert("Skill/Interest berhasil ditambahkan");
